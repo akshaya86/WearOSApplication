@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/box_inset_layout_padding"
+    tools:context=".presentation.ui.MeasHeartRateActivity"
+    tools:deviceIds="wear">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/inner_frame_layout_padding"
+        app:layout_boxedEdges="all">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/floatLikeId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_baseline_favorite_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/heratRateCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimens_10dp"
+                android:text="--"
+                android:textColor="@color/color_berry"
+                app:layout_constraintStart_toEndOf="@+id/floatLikeId"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clHeartStartId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dimens_10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/floatLikeId">
+
+                <TextView
+                    android:id="@+id/tvHeartStartId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@drawable/ic_baseline_south_24"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="@dimen/dimens_10dp"
+                    android:paddingBottom="@dimen/dimens_10dp"
+                    android:text="@string/heart_rate_start"
+                    android:textColor="@color/color_berry"
+                    android:textSize="@dimen/font_10sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background"
+                    android:gravity="center_horizontal|center"
+                    android:text="Start"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/font_10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHeartStartId" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clHeartStopId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dimens_10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/floatLikeId">
+
+                <ImageView
+                    android:id="@+id/imgHeartMonitorId"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:src="@drawable/pngegg"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background"
+                    android:gravity="center_horizontal|center"
+                    android:text="Stop"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/font_10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgHeartMonitorId" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clExportHeartConfirmId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dimens_10dp"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/floatLikeId">
+
+                <TextView
+                    android:id="@+id/tvHeartExportId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="@dimen/dimens_15dp"
+                    android:paddingBottom="@dimen/dimens_15dp"
+                    android:text="@string/heart_rate_start"
+                    android:textColor="@color/color_berry"
+                    android:textSize="@dimen/font_10sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvHeartExConfirmId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background"
+                    android:gravity="center_horizontal|center"
+                    android:text="Confirm"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/font_10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHeartExportId" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clExportHeartRateMsgId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dimens_10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/floatLikeId">
+
+                <TextView
+                    android:id="@+id/tvHeartExportUploadingId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="@dimen/dimens_15dp"
+                    android:paddingBottom="@dimen/dimens_15dp"
+                    android:text="@string/heart_rate_export"
+                    android:textColor="@color/color_berry"
+                    android:textSize="@dimen/font_10sp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvHeartExportedDataId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center"
+                    android:paddingTop="@dimen/dimens_15dp"
+                    android:paddingBottom="@dimen/dimens_15dp"
+                    android:text="@string/heart_rate_exported_data"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_berry"
+                    android:textSize="@dimen/font_10sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHeartExportUploadingId" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </FrameLayout>
+</androidx.wear.widget.BoxInsetLayout>

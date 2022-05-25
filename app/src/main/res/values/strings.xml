@@ -2,4 +2,10 @@
     <string name="app_name">WearableApp</string>
     <string name="message">Watch face tapped</string>
     <string name="my_analog_name">My Analog</string>
+
+    <string name="hello_world">Hello Square World!</string>
+    <string name="title_activity_meas_heart_rate">MeasHeartRateActivity</string>
+    <string name="heart_rate_start">Start continuous heart rate measurements</string>
+    <string name="heart_rate_export">Exporting data as CSV</string>
+    <string name="heart_rate_exported_data">Successfully exported \nHR data!</string>
 </resources>
