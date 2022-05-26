@@ -1,4 +1,4 @@
-package com.example.wearableapp
+package com.example.wearableapp.presentation.watchface
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -22,6 +22,7 @@ import android.support.wearable.watchface.WatchFaceService
 import android.support.wearable.watchface.WatchFaceStyle
 import android.view.SurfaceHolder
 import android.widget.Toast
+import com.example.wearableapp.R
 
 import java.lang.ref.WeakReference
 import java.util.Calendar

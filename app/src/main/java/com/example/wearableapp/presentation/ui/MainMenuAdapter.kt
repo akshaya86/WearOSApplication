@@ -42,12 +42,12 @@ class MainMenuAdapter() : RecyclerView.Adapter<MainMenuAdapter.RecyclerViewHolde
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        val (text, image) = dataSource[position]
+        val (text) = dataSource[position]
 
         holder.menuItem.text = text
         holder.menuContainer.setOnClickListener {
-            context?.resources?.let { it1 -> holder.menuContainer.setBackgroundColor(it1.getColor(R.color.color_black)) }
-            context?.resources?.let { it1 -> holder.menuItem.setTextColor(it1?.getColor(android.R.color.white)) }
+            context?.resources?.let { it1 -> holder.menuItem.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_background)) }
+            context?.resources?.let { it1 -> holder.menuItem.setTextColor(it1?.getColor(R.color.color_berry)) }
             if (mCallback != null) {
                 mCallback?.onItemClicked(position)
             }

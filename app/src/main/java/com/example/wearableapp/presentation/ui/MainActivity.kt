@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMainBinding
+import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_EXPORT_HR
+import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_HR
+import com.example.wearableapp.presentation.utils.Constants.Companion.HR_TYPE
 
 
 class MainActivity : Activity() {
@@ -30,10 +33,10 @@ class MainActivity : Activity() {
         val menuItems: ArrayList<MenuItem> = ArrayList()
         for (i in 1..5){
             if(i==1)
-            menuItems.add(MenuItem( "Measure HR ",R.drawable.ic_android_black_24dp))
-            if(i==2) menuItems.add(MenuItem( "Export HR Data ",R.drawable.ic_android_black_24dp))
+            menuItems.add(MenuItem( "Measure HR "))
+            if(i==2) menuItems.add(MenuItem( "Export HR Data "))
             if(i>2)
-            menuItems.add(MenuItem( "Item "+i,R.drawable.ic_android_black_24dp))
+            menuItems.add(MenuItem( "Item "+i))
 
         }
 
@@ -41,21 +44,14 @@ class MainActivity : Activity() {
             MainMenuAdapter(this, menuItems, object : MainMenuAdapter.AdapterCallback {
                 override fun onItemClicked(menuPosition: Int?) {
                     when (menuPosition) {
-                        0 -> startActivity(Intent(this@MainActivity,MeasHeartRateActivity::class.java))
-                        1 -> startActivity(Intent(this@MainActivity,MeasHeartRateActivity::class.java))
-                        2 -> Toast.makeText(this@MainActivity,"2222",Toast.LENGTH_SHORT).show()
-                        3 -> Toast.makeText(this@MainActivity,"333",Toast.LENGTH_SHORT).show()
-                        else -> Toast.makeText(this@MainActivity,"else",Toast.LENGTH_SHORT).show()
+                        0 -> startActivity(Intent(this@MainActivity,MeasHeartRateActivity::class.java).
+                                putExtra(HR_TYPE, FLAG_HR))
+                        1 -> startActivity(Intent(this@MainActivity,MeasHeartRateActivity::class.java).
+                                putExtra(HR_TYPE, FLAG_EXPORT_HR))
+                        else -> Toast.makeText(this@MainActivity,"Item "+menuPosition,Toast.LENGTH_SHORT).show()
                     }
                 }
             })
-
-        /*binding.btnMeasureHrId.setOnClickListener {
-            Toast.makeText(this,"Measure HR",Toast.LENGTH_SHORT).show()
-        }
-        binding.btnExportHrDataId.setOnClickListener {
-            Toast.makeText(this,"Export HR",Toast.LENGTH_SHORT).show()
-        }*/
 
     }
 
@@ -63,9 +59,9 @@ class MainActivity : Activity() {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         if (sensorManager?.getDefaultSensor(Sensor.TYPE_HEART_RATE) != null) {
-            Toast.makeText(this,"HEART_BEAT supports",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"HeartBeat supports",Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this,"no HEART_BEAT supports",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"no HeartBeat supports",Toast.LENGTH_SHORT).show()
         }
     }
 }

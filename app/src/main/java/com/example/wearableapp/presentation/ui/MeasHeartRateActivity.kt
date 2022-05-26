@@ -8,7 +8,11 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMeasHeartRateBinding
+import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_EXPORT_HR
+import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_HR
+import com.example.wearableapp.presentation.utils.Constants.Companion.HR_TYPE
 
 
 class MeasHeartRateActivity : Activity(), SensorEventListener {
@@ -23,7 +27,28 @@ class MeasHeartRateActivity : Activity(), SensorEventListener {
 
         binding = ActivityMeasHeartRateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        getSensorData()
+        getHrType()
+        setListeners()
 
+    }
+
+    private fun getHrType() {
+        val type = intent.getStringExtra(HR_TYPE)
+        when(type){
+            FLAG_HR->{
+                binding.clHeartStartId.visibility = View.VISIBLE
+                binding.clExportHeartConfirmId.visibility = View.GONE
+            }
+            FLAG_EXPORT_HR->{
+                binding.clHeartStartId.visibility = View.GONE
+                binding.clExportHeartConfirmId.visibility = View.VISIBLE
+                binding.flHeartRateIndicatorId.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun setListeners() {
         binding.tvHeartExConfirmId.setOnClickListener {
             binding.clExportHeartConfirmId.visibility = View.GONE
             binding.clExportHeartRateMsgId.visibility = View.VISIBLE
@@ -35,7 +60,14 @@ class MeasHeartRateActivity : Activity(), SensorEventListener {
             binding.tvHeartExportUploadingId.visibility = View.GONE
         }
 
-        getSensorData()
+        binding.tvHeartRateStartId.setOnClickListener {
+            binding.clHeartStartId.visibility = View.GONE
+            binding.clHeartStopId.visibility = View.VISIBLE
+        }
+
+        binding.tvHeartRateStopId.setOnClickListener {
+            binding.floatLikeId.setBackgroundResource(R.drawable.ic_heart_inline_icon)
+        }
     }
 
     private fun getSensorData() {

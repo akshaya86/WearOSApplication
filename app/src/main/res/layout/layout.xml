@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/rounded_bg"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/menu_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Menu Item"
         android:gravity="center_vertical|center"
-        android:textColor="#ffffff"
-        android:padding="5dp"
+        android:padding="@dimen/dimens_5dp"
+        android:text="@string/menu_item"
+        android:background="@drawable/rounded_bg"
+        android:layout_margin="@dimen/dimens_3dp"
+        android:textColor="@color/color_black"
         android:textSize="@dimen/font_12sp"
-        tools:ignore="HardcodedText" />
+        android:fontFamily="sans-serif-light" />
 </RelativeLayout>

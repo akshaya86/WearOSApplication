@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_black"
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".presentation.ui.MeasHeartRateActivity"
     tools:deviceIds="wear">
@@ -18,24 +19,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/floatLikeId"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:id="@+id/flHeartRateIndicatorId"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_baseline_favorite_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/heratRateCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimens_10dp"
-                android:text="--"
-                android:textColor="@color/color_berry"
-                app:layout_constraintStart_toEndOf="@+id/floatLikeId"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/floatLikeId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="@dimen/dimens_20dp"
+                    android:background="@drawable/ic_baseline_favorite_24"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/heratRateCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/dimens_10dp"
+                    android:text="--"
+                    android:textColor="@color/color_berry"
+                    app:layout_constraintStart_toEndOf="@+id/floatLikeId"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </FrameLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clHeartStartId"
@@ -43,27 +55,31 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dimens_10dp"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/floatLikeId">
+                app:layout_constraintTop_toBottomOf="@+id/flHeartRateIndicatorId">
 
                 <TextView
                     android:id="@+id/tvHeartStartId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableBottom="@drawable/ic_baseline_south_24"
                     android:gravity="center_horizontal"
-                    android:paddingTop="@dimen/dimens_10dp"
-                    android:paddingBottom="@dimen/dimens_10dp"
+                    android:paddingTop="@dimen/dimens_15dp"
+                    android:paddingBottom="@dimen/dimens_15dp"
                     android:text="@string/heart_rate_start"
                     android:textColor="@color/color_berry"
                     android:textSize="@dimen/font_10sp"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:drawableBottom="@drawable/ic_baseline_south_24" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvHeartRateStartId"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_background"
+                    android:layout_marginStart="@dimen/dimens_40dp"
+                    android:layout_marginEnd="@dimen/dimens_40dp"
+                    android:background="@drawable/rounded_button"
                     android:gravity="center_horizontal|center"
-                    android:text="Start"
+                    android:padding="@dimen/dimens_8dp"
+                    android:text="@string/start"
                     android:textAllCaps="false"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/font_10sp"
@@ -78,21 +94,28 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dimens_10dp"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/floatLikeId">
+                app:layout_constraintTop_toBottomOf="@+id/flHeartRateIndicatorId">
 
                 <ImageView
                     android:id="@+id/imgHeartMonitorId"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:src="@drawable/pngegg"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dimens_20dp"
+                    android:paddingBottom="@dimen/dimens_20dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_hr_line_icon"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvHeartRateStopId"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_background"
+                    android:layout_marginStart="@dimen/dimens_40dp"
+                    android:layout_marginEnd="@dimen/dimens_40dp"
+                    android:background="@drawable/rounded_button"
                     android:gravity="center_horizontal|center"
-                    android:text="Stop"
+                    android:padding="@dimen/dimens_8dp"
+                    android:text="@string/stop"
                     android:textAllCaps="false"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/font_10sp"
@@ -106,8 +129,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dimens_10dp"
-                android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@+id/floatLikeId">
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/flHeartRateIndicatorId">
 
                 <TextView
                     android:id="@+id/tvHeartExportId"
@@ -116,18 +139,21 @@
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/dimens_15dp"
                     android:paddingBottom="@dimen/dimens_15dp"
-                    android:text="@string/heart_rate_start"
+                    android:text="@string/heart_rate_export_message"
                     android:textColor="@color/color_berry"
                     android:textSize="@dimen/font_10sp"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvHeartExConfirmId"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_background"
+                    android:layout_marginStart="@dimen/dimens_40dp"
+                    android:layout_marginEnd="@dimen/dimens_40dp"
+                    android:background="@drawable/rounded_button"
                     android:gravity="center_horizontal|center"
-                    android:text="Confirm"
+                    android:padding="@dimen/dimens_8dp"
+                    android:text="@string/confirm"
                     android:textAllCaps="false"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/font_10sp"
@@ -141,8 +167,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dimens_10dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/floatLikeId">
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/flHeartRateIndicatorId">
 
                 <TextView
                     android:id="@+id/tvHeartExportUploadingId"
@@ -161,6 +187,7 @@
                     android:id="@+id/tvHeartExportedDataId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dimens_20dp"
                     android:gravity="center_horizontal|center"
                     android:paddingTop="@dimen/dimens_15dp"
                     android:paddingBottom="@dimen/dimens_15dp"
@@ -171,7 +198,8 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvHeartExportUploadingId" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvHeartExportUploadingId"
+                    android:drawableBottom="@drawable/ic_hr_line_icon" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
