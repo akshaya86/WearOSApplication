@@ -1,22 +1,26 @@
 package com.example.wearableapp.presentation.ui
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMainBinding
+import com.example.wearableapp.presentation.model.MenuItem
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_EXPORT_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.HR_TYPE
+import com.example.wearableapp.presentation.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel by viewModel<MainViewModel>()
 
     private var sensorManager: SensorManager? = null
 
@@ -30,18 +34,10 @@ class MainActivity : Activity() {
         binding.rvListId.isEdgeItemsCenteringEnabled
         binding.rvListId.layoutManager = LinearLayoutManager(this)
 
-        val menuItems: ArrayList<MenuItem> = ArrayList()
-        for (i in 1..5){
-            if(i==1)
-            menuItems.add(MenuItem( "Measure HR "))
-            if(i==2) menuItems.add(MenuItem( "Export HR Data "))
-            if(i>2)
-            menuItems.add(MenuItem( "Item "+i))
 
-        }
 
         binding.rvListId.adapter =
-            MainMenuAdapter(this, menuItems, object : MainMenuAdapter.AdapterCallback {
+            MainMenuAdapter(this, viewModel.getMenuList(), object : MainMenuAdapter.AdapterCallback {
                 override fun onItemClicked(menuPosition: Int?) {
                     when (menuPosition) {
                         0 -> startActivity(Intent(this@MainActivity,MeasHeartRateActivity::class.java).

@@ -5,7 +5,7 @@ import com.example.data.network.base.RoomMapper
 
 data class HeartRate(
     val id: Int? = 0,
-    val ratebpm: Int? = 0,
+    var ratebpm: Double? = 0.0,
     val time: Long? = 0
 )
 

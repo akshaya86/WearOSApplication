@@ -8,16 +8,23 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMeasHeartRateBinding
+import com.example.wearableapp.presentation.utils.Constants.Companion.DEFAULT_NAME
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_EXPORT_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.HR_TYPE
+import com.example.wearableapp.presentation.viewmodel.MainViewModel
+import com.example.wearableapp.presentation.viewmodel.MeasureHeartRateViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MeasHeartRateActivity : Activity(), SensorEventListener {
+class MeasHeartRateActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var binding: ActivityMeasHeartRateBinding
+
+    private val viewModel by viewModel<MeasureHeartRateViewModel>()
 
     private var mSensorManager: SensorManager? = null
     private var mHeartSensor: Sensor? = null
@@ -93,10 +100,15 @@ class MeasHeartRateActivity : Activity(), SensorEventListener {
         if (event != null) {
             val heartRate = event.values[0]
             binding.heratRateCount.text = heartRate.toString()
+            viewModel.heartLiveData.value?.ratebpm = heartRate.toDouble()
         }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         Log.d("Sensor","Sensor Data-"+sensor?.name+"\t\n"+accuracy)
+    }
+
+    private fun getHeartMeasure(){
+        viewModel.sendHeartRateData(DEFAULT_NAME)
     }
 }
