@@ -12,6 +12,7 @@ import com.example.wearableapp.presentation.model.MenuItem
 
 class MainMenuAdapter() : RecyclerView.Adapter<MainMenuAdapter.RecyclerViewHolder>() {
     private var dataSource = ArrayList<MenuItem>()
+    private var selectedItem = -1
 
     interface AdapterCallback {
         fun onItemClicked(menuPosition: Int?)
@@ -46,9 +47,24 @@ class MainMenuAdapter() : RecyclerView.Adapter<MainMenuAdapter.RecyclerViewHolde
         val (text) = dataSource[position]
 
         holder.menuItem.text = text
+        context?.resources?.let {
+            holder.menuItem.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_bg))
+            holder.menuItem.setTextColor(it.getColor(R.color.color_black))
+        }
+
+        if(selectedItem == position) {
+            context?.resources?.let {
+                holder.menuItem.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_background))
+                holder.menuItem.setTextColor(it.getColor(R.color.color_berry))
+            }
+        }
+
         holder.menuContainer.setOnClickListener {
-            context?.resources?.let { it1 -> holder.menuItem.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_background)) }
-            context?.resources?.let { it1 -> holder.menuItem.setTextColor(it1?.getColor(R.color.color_berry)) }
+            val previousItem = selectedItem
+            selectedItem = position
+            notifyItemChanged(previousItem)
+            notifyItemChanged(position)
+
             if (mCallback != null) {
                 mCallback?.onItemClicked(position)
             }

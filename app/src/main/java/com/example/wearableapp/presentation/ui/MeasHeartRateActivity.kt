@@ -8,6 +8,9 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMeasHeartRateBinding
@@ -37,6 +40,7 @@ class MeasHeartRateActivity : AppCompatActivity(), SensorEventListener {
         getSensorData()
         getHrType()
         setListeners()
+        setHeartGraphData()
 
     }
 
@@ -70,11 +74,26 @@ class MeasHeartRateActivity : AppCompatActivity(), SensorEventListener {
         binding.tvHeartRateStartId.setOnClickListener {
             binding.clHeartStartId.visibility = View.GONE
             binding.clHeartStopId.visibility = View.VISIBLE
+            startAnimation()
         }
 
         binding.tvHeartRateStopId.setOnClickListener {
-            binding.floatLikeId.setBackgroundResource(R.drawable.ic_heart_inline_icon)
+            stopAnimation()
+            binding.clHeartStartId.visibility = View.VISIBLE
+            binding.clHeartStopId.visibility = View.GONE
         }
+    }
+
+    private fun startAnimation(){
+        binding.floatLikeId.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
+        binding.floatLikeId.startAnimation(AnimationUtils.loadAnimation(this,R.anim.beatanim))
+        binding.heratRateCount.text = "50"
+    }
+
+    private fun stopAnimation(){
+        binding.floatLikeId.setBackgroundResource(R.drawable.ic_heart_inline_icon)
+        binding.floatLikeId.clearAnimation()
+        binding.heratRateCount.text = "--"
     }
 
     private fun getSensorData() {
@@ -110,5 +129,14 @@ class MeasHeartRateActivity : AppCompatActivity(), SensorEventListener {
 
     private fun getHeartMeasure(){
         viewModel.sendHeartRateData(DEFAULT_NAME)
+    }
+
+    private fun setHeartGraphData(){
+        binding.heartRateGraphId.let {
+            it.lineColor = resources.getColor(R.color.color_berry)
+            it.setBackgroundColor(resources.getColor(R.color.color_black))
+            it.lineWidth = 2f
+        }
+        binding.heartRateGraphId.adapter = HeartDataAdapter(viewModel.setDummyHeartData())
     }
 }

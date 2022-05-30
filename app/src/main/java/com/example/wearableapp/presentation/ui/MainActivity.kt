@@ -4,11 +4,14 @@ import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMainBinding
-import com.example.wearableapp.presentation.model.MenuItem
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_EXPORT_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.HR_TYPE

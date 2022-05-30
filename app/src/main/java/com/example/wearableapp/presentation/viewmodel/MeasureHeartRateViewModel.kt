@@ -21,4 +21,23 @@ class MeasureHeartRateViewModel(private val getHeartRateUseCase: GetHeartRateUse
             .onFailure { _viewState.value = Error(it.throwable)  }
 
     }
+
+    fun setDummyHeartData(): ArrayList<Float> {
+        var heartDataList = ArrayList<Float>()
+        heartDataList.add(1.0F);heartDataList.add(4.2F)
+        heartDataList.add(3.4F);heartDataList.add(1.4F)
+        heartDataList.add(6.8F);heartDataList.add(2.0F)
+        heartDataList.add(4.2F);heartDataList.add(8.4F)
+        heartDataList.add(3.4F);heartDataList.add(1.6F)
+        heartDataList.add(5.2F);heartDataList.add(3.3F)
+        heartDataList.add(4.8F);heartDataList.add(2.9F)
+        heartDataList.add(1.0F);heartDataList.add(4.2F)
+        heartDataList.add(3.4F);heartDataList.add(1.4F)
+        heartDataList.add(6.8F);heartDataList.add(2.0F)
+        heartDataList.add(4.2F);heartDataList.add(8.4F)
+        heartDataList.add(3.4F);heartDataList.add(1.6F)
+        heartDataList.add(5.2F);heartDataList.add(3.3F)
+        heartDataList.add(4.8F);heartDataList.add(2.9F)
+        return heartDataList
+    }
 }
