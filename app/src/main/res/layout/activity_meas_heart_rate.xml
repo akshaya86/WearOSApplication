@@ -43,6 +43,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/dimens_10dp"
                     android:text="--"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/color_berry"
                     app:layout_constraintStart_toEndOf="@+id/floatLikeId"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dimens_10dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/flHeartRateIndicatorId">
 
                 <TextView
@@ -67,6 +69,8 @@
                     android:text="@string/heart_rate_start"
                     android:textColor="@color/color_berry"
                     android:textSize="@dimen/font_10sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
                     app:layout_constraintTop_toTopOf="parent"
                     android:drawableBottom="@drawable/ic_baseline_south_24" />
 
@@ -83,6 +87,8 @@
                     android:textAllCaps="false"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/font_10sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvHeartStartId" />
@@ -117,6 +123,8 @@
                     android:padding="@dimen/dimens_8dp"
                     android:text="@string/stop"
                     android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/font_10sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -139,6 +147,8 @@
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/dimens_15dp"
                     android:paddingBottom="@dimen/dimens_15dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/heart_rate_export_message"
                     android:textColor="@color/color_berry"
                     android:textSize="@dimen/font_10sp"
@@ -155,6 +165,8 @@
                     android:padding="@dimen/dimens_8dp"
                     android:text="@string/confirm"
                     android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/font_10sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -177,6 +189,8 @@
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/dimens_15dp"
                     android:paddingBottom="@dimen/dimens_15dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/heart_rate_export"
                     android:textColor="@color/color_berry"
                     android:textSize="@dimen/font_10sp"
@@ -191,6 +205,8 @@
                     android:gravity="center_horizontal|center"
                     android:paddingTop="@dimen/dimens_15dp"
                     android:paddingBottom="@dimen/dimens_15dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/heart_rate_exported_data"
                     android:textAllCaps="false"
                     android:textColor="@color/color_berry"

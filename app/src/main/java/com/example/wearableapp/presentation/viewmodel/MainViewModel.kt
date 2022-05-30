@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.wearableapp.presentation.base.BaseViewModel
 import com.example.wearableapp.presentation.model.MenuItem
 
-class MainViewModel: BaseViewModel() {
+class MainViewModel: ViewModel() {
 
     fun getMenuList(): ArrayList<MenuItem> {
         val menuItems: ArrayList<MenuItem> = ArrayList()
