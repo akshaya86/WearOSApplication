@@ -9,15 +9,15 @@ import com.google.gson.reflect.TypeToken
 class Converters {
   private val gson = Gson()
   
-  // Weather list converters
+  // Heart Rate Data list converters
   
   @TypeConverter
-  fun fromWeatherListToJson(list: List<HeartRate>?): String {
+  fun fromHeartListToJson(list: List<HeartRate>?): String {
     return list?.let { gson.toJson(it) } ?: ""
   }
   
   @TypeConverter
-  fun fromJsonToWeatherList(jsonList: String): List<HeartRate> {
+  fun fromJsonToHeartList(jsonList: String): List<HeartRate> {
     val listType = object : TypeToken<List<HeartRate>>() {}.type
     return gson.fromJson(jsonList, listType)
   }
