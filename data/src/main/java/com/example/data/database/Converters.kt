@@ -1,8 +1,8 @@
 package com.example.data.database
 
 import androidx.room.TypeConverter
-import com.example.data.network.model.HeartRate
-import com.example.data.network.model.HeartRateData
+import com.example.data.datamodels.model.HeartRate
+import com.example.data.datamodels.model.HeartRateData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

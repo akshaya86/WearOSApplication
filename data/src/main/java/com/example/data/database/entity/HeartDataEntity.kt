@@ -4,9 +4,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.data.database.HR_TABLE_NAME
-import com.example.data.network.model.HeartRate
-import com.example.data.network.model.HeartRateData
-import com.example.data.network.base.DomainMapper
+import com.example.data.datamodels.base.DomainMapper
+import com.example.data.datamodels.model.HeartRate
+import com.example.data.datamodels.model.HeartRateData
 import com.example.domain.model.HeartRateInfo
 
 @Entity(tableName = HR_TABLE_NAME)
