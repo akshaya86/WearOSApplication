@@ -1,6 +1,6 @@
-package com.example.data.network.base
+package com.example.data.datamodels.base
 
-import com.example.data.utils.Constant.Companion.GENERAL_NETWORK_ERROR
+import com.example.data.utils.DataConstant.Companion.GENERAL_DB_ERROR
 import com.example.domain.model.Failure
 import com.example.domain.model.HttpError
 import com.example.domain.model.Result
@@ -26,7 +26,7 @@ inline fun <T : Any> Response<T>.onFailure(action: (HttpError) -> Unit) {
 }
 
 /**
- * Use this if you need to cache data after fetching it from the api, or retrieve something from cache
+ * Use this if you need to cache data after fetching it from the db, or retrieve something from cache
  */
 
 inline fun <T : RoomMapper<R>, R : DomainMapper<U>, U : Any> Response<T>.getData(
@@ -42,21 +42,8 @@ inline fun <T : RoomMapper<R>, R : DomainMapper<U>, U : Any> Response<T>.getData
       val cachedModel = fetchFromCacheAction()
       Success(cachedModel.mapToDomainModel())
     }
-    return Failure(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
+    return Failure(HttpError(Throwable(GENERAL_DB_ERROR)))
   } catch (e: IOException) {
-    return Failure(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
-  }
-}
-
-/**
- * Use this when communicating only with the api service
- */
-fun <T : DomainMapper<R>, R : Any> Response<T>.getData(): Result<R> {
-  try {
-    onSuccess { return Success(it.mapToDomainModel()) }
-    onFailure { return Failure(it) }
-    return Failure(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
-  } catch (e: IOException) {
-    return Failure(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
+    return Failure(HttpError(Throwable(GENERAL_DB_ERROR)))
   }
 }

@@ -2,7 +2,7 @@ package com.example.domain.model
 
 sealed class Result<out T : Any>
 data class Success<out T : Any>(val data: T) : Result<T>()
-data class Failure(val httpError: HttpError) : Result<Nothing>()
+data class Failure(val error: Any) : Result<Nothing>()
 
 class HttpError(val throwable: Throwable, val errorCode: Int = 0)
 
@@ -11,6 +11,6 @@ inline fun <T : Any> Result<T>.onSuccess(action: (T) -> Unit): Result<T> {
   return this
 }
 
-inline fun <T : Any> Result<T>.onFailure(action: (HttpError) -> Unit) {
-  if (this is Failure) action(httpError)
+inline fun <T : Any> Result<T>.onFailure(action: (Any) -> Unit) {
+  if (this is Failure) action(error)
 }

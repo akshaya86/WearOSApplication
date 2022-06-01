@@ -1,7 +1,7 @@
-package com.example.data.network.model
+package com.example.data.datamodels.model
 
 import com.example.data.database.entity.HeartDataEntity
-import com.example.data.network.base.RoomMapper
+import com.example.data.datamodels.base.RoomMapper
 
 data class HeartRate(
     val id: Int? = 0,

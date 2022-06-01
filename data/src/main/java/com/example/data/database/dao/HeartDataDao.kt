@@ -9,13 +9,13 @@ interface HeartDataDao {
 
     @Transaction
     suspend fun updateHeartDetails(heartData: HeartDataEntity): HeartDataEntity {
-        saveHeartRateData(heartData)
-        return getSaveHeartRateData(heartData.name ?: "")
+        insertHeartRateData(heartData)
+        return retrieveHeartRateData(heartData.name ?: "")
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveHeartRateData(heartRate: HeartDataEntity)
+    suspend fun insertHeartRateData(heartRate: HeartDataEntity)
 
     @Query("SELECT * FROM $HR_TABLE_NAME WHERE name = :name LIMIT 1")
-    suspend fun getSaveHeartRateData(name: String): HeartDataEntity
+    suspend fun retrieveHeartRateData(name: String): HeartDataEntity
 }
