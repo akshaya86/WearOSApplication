@@ -21,8 +21,8 @@ inline fun <T : Any> Response<T>.onSuccess(action: (T) -> Unit): Response<T> {
   return this
 }
 
-inline fun <T : Any> Response<T>.onFailure(action: (HttpError) -> Unit) {
-  if (!isSuccessful) errorBody()?.run { action(HttpError(Throwable(message()), code())) }
+inline fun <T : Any> Response<T>.onFailure(action: (Error) -> Unit) {
+  if (!isSuccessful) errorBody()?.run { action(Error(Throwable(message()).toString())) }
 }
 
 /**
@@ -42,8 +42,8 @@ inline fun <T : RoomMapper<R>, R : DomainMapper<U>, U : Any> Response<T>.getData
       val cachedModel = fetchFromCacheAction()
       Success(cachedModel.mapToDomainModel())
     }
-    return Failure(HttpError(Throwable(GENERAL_DB_ERROR)))
+    return Failure(Error(Throwable(GENERAL_DB_ERROR)))
   } catch (e: IOException) {
-    return Failure(HttpError(Throwable(GENERAL_DB_ERROR)))
+    return Failure(Error(Throwable(GENERAL_DB_ERROR)))
   }
 }

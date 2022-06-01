@@ -1,7 +1,7 @@
 package com.example.data.repository
 
 import com.example.data.coroutine.CoroutineContextProvider
-import com.example.data.network.base.DomainMapper
+import com.example.data.datamodels.base.DomainMapper
 import com.example.domain.model.Result
 import com.example.domain.model.Success
 import kotlinx.coroutines.withContext
