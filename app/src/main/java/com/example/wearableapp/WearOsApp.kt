@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.example.data.appModule
 import com.example.data.di.databaseModule
-import com.example.data.di.networkingModule
 import com.example.data.di.repositoryModule
 import com.example.domain.di.interactionModule
 import com.example.wearableapp.di.viewModelModule
@@ -32,7 +31,7 @@ class WearOsApp:Application() {
     }
 
     val appModules = listOf(appModule, viewModelModule )
-    val dataModules = listOf(networkingModule, databaseModule, repositoryModule)
+    val dataModules = listOf(databaseModule, repositoryModule)
     val domainModules = listOf(interactionModule)
 
     override fun attachBaseContext(base: Context?) {
