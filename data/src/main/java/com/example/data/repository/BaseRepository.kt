@@ -1,11 +1,7 @@
 package com.example.data.repository
 
 import com.example.data.coroutine.CoroutineContextProvider
-import com.example.data.database.DB_ENTRY_ERROR
 import com.example.data.network.base.DomainMapper
-import com.example.data.utils.Constant.Companion.GENERAL_NETWORK_ERROR
-import com.example.domain.model.Failure
-import com.example.domain.model.HttpError
 import com.example.domain.model.Result
 import com.example.domain.model.Success
 import kotlinx.coroutines.withContext

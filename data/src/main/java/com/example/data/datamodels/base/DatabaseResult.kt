@@ -1,6 +1,6 @@
-package com.example.data.network.base
+package com.example.data.datamodels.base
 
-import com.example.data.utils.Constant.Companion.GENERAL_NETWORK_ERROR
+import com.example.data.utils.DataConstant.Companion.GENERAL_DB_ERROR
 import com.example.domain.model.Failure
 import com.example.domain.model.HttpError
 import com.example.domain.model.Result
@@ -42,8 +42,8 @@ inline fun <T : RoomMapper<R>, R : DomainMapper<U>, U : Any> Response<T>.getData
       val cachedModel = fetchFromCacheAction()
       Success(cachedModel.mapToDomainModel())
     }
-    return Failure(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
+    return Failure(HttpError(Throwable(GENERAL_DB_ERROR)))
   } catch (e: IOException) {
-    return Failure(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
+    return Failure(HttpError(Throwable(GENERAL_DB_ERROR)))
   }
 }
