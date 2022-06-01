@@ -1,9 +1,8 @@
 package com.example.domain.usecase
 
-import com.example.domain.base.BaseUseCase
-import com.example.domain.model.HeartRateInfo
-import com.example.domain.model.Result
+import com.example.domain.repository.HeartRateMeasureRepository
 
-interface GetHeartRateUseCase : BaseUseCase<String, HeartRateInfo> {
-    override suspend operator fun invoke(param: String): Result<HeartRateInfo>
+class GetHeartRateUseCase(private val heartRateMeasureRepository: HeartRateMeasureRepository):IGetHeartRateUseCase {
+    override suspend fun invoke(param: String) = heartRateMeasureRepository.getHeartRateMeasureData(param)
+
 }
