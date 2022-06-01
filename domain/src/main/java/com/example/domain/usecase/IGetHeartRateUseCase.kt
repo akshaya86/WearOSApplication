@@ -5,5 +5,5 @@ import com.example.domain.model.HeartRateInfo
 import com.example.domain.model.Result
 
 interface IGetHeartRateUseCase : IBaseUseCase<String, HeartRateInfo> {
-    override suspend fun invoke(param: String): Result<HeartRateInfo>
+    override suspend operator fun invoke(param: String): Result<HeartRateInfo>
 }

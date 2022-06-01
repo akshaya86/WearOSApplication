@@ -3,7 +3,6 @@ package com.example.wearableapp.presentation.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.data.common.Connectivity
 import com.example.data.coroutine.CoroutineContextProvider
 import com.example.wearableapp.presentation.extensions.launch
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +15,6 @@ import kotlin.coroutines.CoroutineContext
 
 open class BaseViewModel<T : Any, E>  : ViewModel(), KoinComponent {
     protected val coroutineContext: CoroutineContextProvider by inject()
-    private val connectivity: Connectivity by inject()
 
     protected val _viewState = MutableLiveData<ViewState<T>>()
     val viewState: LiveData<ViewState<T>>
@@ -28,11 +26,7 @@ open class BaseViewModel<T : Any, E>  : ViewModel(), KoinComponent {
 
     protected fun executeUseCase(action: suspend () -> Unit, noInternetAction: () -> Unit) {
         _viewState.value = Loading()
-        if (connectivity.hasNetworkAccess()) {
             launch { action() }
-        } else {
-            noInternetAction()
-        }
     }
 
     protected fun executeUseCase(action: suspend () -> Unit) {
