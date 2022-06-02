@@ -1,8 +1,7 @@
 package com.example.data.database
 
 import androidx.room.TypeConverter
-import com.example.data.datamodels.model.HeartRate
-import com.example.data.datamodels.model.HeartRateData
+import com.example.data.database.entity.HeartRateEntity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -12,26 +11,26 @@ class Converters {
   // Heart Rate Data list converters
   
   @TypeConverter
-  fun fromHeartListToJson(list: List<HeartRate>?): String {
+  fun fromHeartListToJson(list: List<HeartRateEntity>?): String {
     return list?.let { gson.toJson(it) } ?: ""
   }
   
   @TypeConverter
-  fun fromJsonToHeartList(jsonList: String): List<HeartRate> {
-    val listType = object : TypeToken<List<HeartRate>>() {}.type
+  fun fromJsonToHeartList(jsonList: String): List<HeartRateEntity> {
+    val listType = object : TypeToken<List<HeartRateEntity>>() {}.type
     return gson.fromJson(jsonList, listType)
   }
   
   // MainInfo converters
   
   @TypeConverter
-  fun fromMainInfoToJson(mainInfo: HeartRateData?): String {
+  fun fromMainInfoToJson(mainInfo: HeartRateEntity?): String {
     return mainInfo?.let { gson.toJson(it) } ?: ""
   }
   
   @TypeConverter
-  fun fromJsonToMainInfo(json: String): HeartRateData {
-    val type = object : TypeToken<HeartRateData>() {}.type
+  fun fromJsonToMainInfo(json: String): HeartRateEntity {
+    val type = object : TypeToken<HeartRateEntity>() {}.type
     return gson.fromJson(json, type)
   }
 }

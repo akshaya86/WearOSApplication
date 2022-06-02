@@ -30,9 +30,9 @@
             android:value="true" />
 
         <service
-            android:name=".presentation.watchface.MyWatchFace"
+            android:name=".presentation.watchface.MyWatchFaceDigital"
             android:exported="true"
-            android:label="@string/my_analog_name"
+            android:label="@string/my_digital_name"
             android:permission="android.permission.BIND_WALLPAPER">
 
             <!--

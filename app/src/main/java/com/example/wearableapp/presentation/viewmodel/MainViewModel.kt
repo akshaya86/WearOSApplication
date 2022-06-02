@@ -1,7 +1,6 @@
 package com.example.wearableapp.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.wearableapp.presentation.base.BaseViewModel
 import com.example.wearableapp.presentation.model.MenuItem
 
 class MainViewModel: ViewModel() {

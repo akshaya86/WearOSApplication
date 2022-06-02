@@ -1,27 +1,14 @@
 package com.example.wearableapp.presentation.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import com.example.data.database.entity.HeartDataEntity
-import com.example.data.datamodels.model.HeartRate
-import com.example.domain.model.HeartRateInfo
-import com.example.domain.model.onFailure
-import com.example.domain.model.onSuccess
-import com.example.domain.usecase.IGetHeartRateUseCase
-import com.example.wearableapp.presentation.base.BaseViewModel
-import com.example.wearableapp.presentation.base.Success
-import com.example.wearableapp.presentation.base.Error
-import com.example.wearableapp.presentation.utils.Constants.Companion.DEFAULT_NAME
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.data.database.entity.HeartRateEntity
+import com.example.domain.model.HeartRateData
+import com.example.domain.usecase.GetHeartRateDataUseCase
 
-class MeasureHeartRateViewModel(private val getHeartRateUseCase: IGetHeartRateUseCase) : BaseViewModel<HeartRateInfo,HeartDataEntity>() {
+class MeasureHeartRateViewModel(private val getHeartRateUseCase :GetHeartRateDataUseCase): ViewModel() {
 
-    var heartLiveData = MutableLiveData<HeartRate>()
-
-    fun sendHeartRateData(userName:String = DEFAULT_NAME) = executeUseCase{
-        getHeartRateUseCase(userName)
-            .onSuccess {  _viewState.value = Success(it)  }
-            .onFailure { _viewState.value = Error(Throwable(it.toString()))  }
-
-    }
+    var heartLiveData = MutableLiveData<HeartRateEntity>()
 
     fun setDummyHeartData(): ArrayList<Float> {
         var heartDataList = ArrayList<Float>()
@@ -41,4 +28,14 @@ class MeasureHeartRateViewModel(private val getHeartRateUseCase: IGetHeartRateUs
         heartDataList.add(4.8F);heartDataList.add(2.9F)
         return heartDataList
     }
+
+    suspend fun getSavedData(): LiveData<List<HeartRateData>> {
+        val data = getHeartRateUseCase.getAllHeartListData().asLiveData()
+        return data
+    }
+
+    suspend fun insertData(){
+        getHeartRateUseCase.insertHeartRateData(HeartRateData(40.0,100000,"Ak"))
+    }
+
 }
