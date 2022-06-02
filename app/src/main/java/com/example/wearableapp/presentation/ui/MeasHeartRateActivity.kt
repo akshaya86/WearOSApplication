@@ -1,6 +1,5 @@
 package com.example.wearableapp.presentation.ui
 
-import android.app.Activity
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -8,18 +7,20 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.example.data.database.entity.HeartRateEntity
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMeasHeartRateBinding
-import com.example.wearableapp.presentation.utils.Constants.Companion.DEFAULT_NAME
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_EXPORT_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.HR_TYPE
-import com.example.wearableapp.presentation.viewmodel.MainViewModel
 import com.example.wearableapp.presentation.viewmodel.MeasureHeartRateViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -41,7 +42,7 @@ class MeasHeartRateActivity : AppCompatActivity(), SensorEventListener {
         getHrType()
         setListeners()
         setHeartGraphData()
-
+        insertData()
     }
 
     private fun getHrType() {
@@ -88,6 +89,7 @@ class MeasHeartRateActivity : AppCompatActivity(), SensorEventListener {
         binding.floatLikeId.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
         binding.floatLikeId.startAnimation(AnimationUtils.loadAnimation(this,R.anim.beatanim))
         binding.heratRateCount.text = "50"
+        getHeartMeasure()
     }
 
     private fun stopAnimation(){
@@ -118,8 +120,13 @@ class MeasHeartRateActivity : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
             val heartRate = event.values[0]
+            Log.d("Sensor","Sensor Data-"+event.sensor.name)
+            Log.d("Sensor","Sensor Data-"+event.values[0])
+            Log.d("Sensor","Sensor Data-"+event.accuracy)
+            Log.d("Sensor","Sensor Data-"+event.timestamp)
+
             binding.heratRateCount.text = heartRate.toString()
-            viewModel.heartLiveData.value?.ratebpm = heartRate.toDouble()
+            viewModel.heartLiveData.value?.heartRateBpm = heartRate.toDouble()
         }
     }
 
@@ -128,7 +135,14 @@ class MeasHeartRateActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun getHeartMeasure(){
-        viewModel.sendHeartRateData(DEFAULT_NAME)
+        CoroutineScope(Dispatchers.Main).launch{
+            viewModel.getSavedData().observe(this@MeasHeartRateActivity, Observer {
+                val result = it
+
+                Log.d("Data","Data------"+result.size)
+            })
+        }
+
     }
 
     private fun setHeartGraphData(){
@@ -138,5 +152,11 @@ class MeasHeartRateActivity : AppCompatActivity(), SensorEventListener {
             it.lineWidth = 2f
         }
         binding.heartRateGraphId.adapter = HeartDataAdapter(viewModel.setDummyHeartData())
+    }
+
+    private fun insertData(){
+        GlobalScope.launch {
+            viewModel.insertData()
+        }
     }
 }
