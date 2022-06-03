@@ -1,4 +1,4 @@
-package com.example.wearableapp.presentation.ui
+package com.example.wearableapp.presentation.adapter
 
 import com.robinhood.spark.SparkAdapter
 
