@@ -4,14 +4,11 @@ import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMainBinding
+import com.example.wearableapp.presentation.adapter.MainMenuAdapter
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_EXPORT_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.FLAG_HR
 import com.example.wearableapp.presentation.utils.Constants.Companion.HR_TYPE
@@ -43,10 +40,8 @@ class MainActivity : AppCompatActivity() {
             MainMenuAdapter(this, viewModel.getMenuList(), object : MainMenuAdapter.AdapterCallback {
                 override fun onItemClicked(menuPosition: Int?) {
                     when (menuPosition) {
-                        0 -> startActivity(Intent(this@MainActivity,MeasHeartRateActivity::class.java).
-                                putExtra(HR_TYPE, FLAG_HR))
-                        1 -> startActivity(Intent(this@MainActivity,MeasHeartRateActivity::class.java).
-                                putExtra(HR_TYPE, FLAG_EXPORT_HR))
+                        0 -> startActivity(Intent(this@MainActivity,MeasHeartRateActivity::class.java))
+                        1 -> startActivity(Intent(this@MainActivity,ExportHeartRateActivity::class.java))
                         else -> Toast.makeText(this@MainActivity,"Item "+menuPosition,Toast.LENGTH_SHORT).show()
                     }
                 }
