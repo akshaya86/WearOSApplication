@@ -68,7 +68,7 @@
         </service>
 
         <activity
-            android:name=".presentation.ui.MeasHeartRateActivity"
+            android:name=".presentation.ui.MeasureHeartRateActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
@@ -87,6 +87,9 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
+        <service
+            android:name=".presentation.service.HeartRateSensorService"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.version"

@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.Flow
 
 interface IHeartRateHistoryRepository {
 
-    suspend fun getHeartRateMeasureData(name:String):Flow<List<HeartRateData>>
-
     suspend fun deleteHeartRatedata()
 
-    suspend fun exportHeartRateData():Flow<List<HeartRateData>>
-
-    suspend fun getAllHeartListData():Flow<List<HeartRateData>>
+    fun getAllHeartListData():Flow<List<HeartRateData>>
 
     fun insertHeartRateData(heartRateData: HeartRateData)
+
+    fun createCSVDataFormat(heartRateData: List<HeartRateData>):Boolean
+
+    fun insertAllHeartRateData(heartRateData: List<HeartRateData>)
 
 }

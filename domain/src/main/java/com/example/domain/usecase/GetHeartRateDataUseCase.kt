@@ -6,25 +6,24 @@ import kotlinx.coroutines.flow.Flow
 
 class GetHeartRateDataUseCase(private val repository: IHeartRateHistoryRepository) {
 
-    suspend fun getAllHeartListData(): Flow<List<HeartRateData>> {
+    fun getAllHeartListData(): Flow<List<HeartRateData>> {
         return repository.getAllHeartListData()
-    }
-
-    suspend fun getSpecificHeartListData(name:String): Flow<List<HeartRateData>> {
-        return repository.getHeartRateMeasureData(name)
     }
 
     suspend fun deleteHeartRateData() {
         repository.deleteHeartRatedata()
     }
 
-    suspend fun exportHeartRateData(): Flow<List<HeartRateData>> {
-        return repository.exportHeartRateData()
+    suspend fun insertHeartRateData(heartRateData: HeartRateData) {
+        repository.insertHeartRateData(heartRateData)
     }
 
-    suspend fun insertHeartRateData(heartRateData: HeartRateData){
-                repository.insertHeartRateData(heartRateData)
+    suspend fun insertAllHeartRateData(heartRateData: List<HeartRateData>) {
+        repository.insertAllHeartRateData(heartRateData)
     }
+
+    fun createCSVDataFormat(heartRateData: List<HeartRateData>) =
+        repository.createCSVDataFormat(heartRateData)
 
 
 }

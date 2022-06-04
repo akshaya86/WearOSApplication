@@ -11,12 +11,12 @@ interface HeartDataDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHeartRateData(heartRate: HeartRateEntity)
 
-    @Query("SELECT * FROM HEARTRATE WHERE name = :name LIMIT 1")
-    fun retrieveHeartRateData(name: String): Flow<List<HeartRateEntity>>
-
     @Query("SELECT * FROM HEARTRATE")
     fun retrieveAllHeartRateData(): Flow<List<HeartRateEntity>>
 
     @Query("DELETE FROM HEARTRATE")
     suspend fun deleteHeartRateData()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllHeartRateData(list: List<HeartRateEntity>)
 }

@@ -15,4 +15,7 @@
     <string name="confirm">Confirm</string>
     <string name="menu_item">Menu Item</string>
     <string name="title_activity_export_heart_rate">ExportHeartRateActivity</string>
+    <string name="sensor_notification">Sensor Notification</string>
+    <string name="sensor_title">Heart Rate Monitor</string>
+    <string name="sensor_desc">Heart Rate Monitoring is started</string>
 </resources>
