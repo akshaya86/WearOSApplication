@@ -48,14 +48,14 @@ class MainMenuAdapter() : RecyclerView.Adapter<MainMenuAdapter.RecyclerViewHolde
 
         holder.menuItem.text = text
         context?.resources?.let {
-            holder.menuItem.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_bg))
-            holder.menuItem.setTextColor(it.getColor(R.color.color_black))
+            //holder.menuContainer.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_bg))
+            //holder.menuItem.setTextColor(it.getColor(R.color.color_black))
         }
 
         if(selectedItem == position) {
             context?.resources?.let {
-                holder.menuItem.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_background))
-                holder.menuItem.setTextColor(it.getColor(R.color.color_berry))
+              //  holder.menuContainer.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_background))
+               // holder.menuItem.setTextColor(it.getColor(R.color.color_berry))
             }
         }
 

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
-    android:background="@color/color_black"
     android:padding="@dimen/box_inset_layout_padding"
+    android:background="@color/color_black"
     tools:context=".presentation.ui.MainActivity"
     tools:deviceIds="wear">
 
@@ -20,26 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimens_140dp"
             android:scrollbars="vertical"
+            android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!--
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_boxedEdges="all">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center">
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-    -->
 </androidx.wear.widget.BoxInsetLayout>
