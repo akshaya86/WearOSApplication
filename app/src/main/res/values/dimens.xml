@@ -31,6 +31,7 @@
     <dimen name="dimens_25dp">25dp</dimen>
     <dimen name="dimens_30dp">30dp</dimen>
     <dimen name="dimens_40dp">40dp</dimen>
+    <dimen name="dimens_60dp">50dp</dimen>
     <dimen name="digital_text_size">40dp</dimen>
     <dimen name="digital_text_size_round">45dp</dimen>
     <dimen name="digital_x_offset">15dp</dimen>
@@ -38,5 +39,7 @@
     <dimen name="digital_y_offset">90dp</dimen>
     <dimen name="dimens_5dp">5dp</dimen>
     <dimen name="dimens_3dp">3dp</dimen>
+    <dimen name="dimens_140dp">140dp</dimen>
+    <dimen name="dimens_45dp">45dp</dimen>
 
 </resources>

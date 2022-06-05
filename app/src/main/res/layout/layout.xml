@@ -3,19 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_gravity="center"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/dimens_45dp"
+    android:gravity="center"
+    android:layout_gravity="center_vertical">
 
     <TextView
         android:id="@+id/menu_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center"
-        android:padding="@dimen/dimens_5dp"
+        android:paddingTop="@dimen/dimens_10dp"
+        android:paddingBottom="@dimen/dimens_10dp"
         android:text="@string/menu_item"
+        android:fontFamily="@font/roboto_regular"
         android:background="@drawable/rounded_bg"
         android:layout_margin="@dimen/dimens_3dp"
         android:textColor="@color/color_black"
-        android:textSize="@dimen/font_12sp"
-        android:fontFamily="sans-serif-light" />
+        android:textStyle="normal"
+        android:textSize="@dimen/font_10sp"/>
 </RelativeLayout>
