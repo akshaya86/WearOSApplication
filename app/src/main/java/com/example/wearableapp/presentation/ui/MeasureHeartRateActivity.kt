@@ -26,6 +26,7 @@ import kotlin.collections.ArrayList
 
 class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.OnClickListener {
 
+    val TAG = MeasureHeartRateActivity::class.simpleName
     private lateinit var binding: ActivityMeasHeartRateBinding
 
     private val viewModel by viewModel<MeasureHeartRateViewModel>()
@@ -126,7 +127,7 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
     }
 
     private fun addHeartRateData() {
-        Log.d("data-insert", "" + measureHRList.size.toString())
+        Log.d(TAG, "" + measureHRList.size.toString())
         lifecycleScope.launch(Dispatchers.IO){
             viewModel.insertData(measureHRList)
         }

@@ -13,12 +13,14 @@ import com.example.domain.model.HeartRateData
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityExportHeartRateBinding
 import com.example.wearableapp.presentation.utils.CheckPermission
+import com.example.wearableapp.presentation.utils.Constants
 import com.example.wearableapp.presentation.viewmodel.ExportHeartRateViewModel
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
 
+    val TAG = ExportHeartRateActivity::class.simpleName
     private lateinit var binding: ActivityExportHeartRateBinding
     private val viewModel by viewModel<ExportHeartRateViewModel>()
 
@@ -47,7 +49,7 @@ class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.getAllHearRateData().observe(this, Observer {
             if(it.isNotEmpty()) {
                 viewModel.heartRateData.value = it
-                Log.d("Data", "Size------" + it.size)
+                Log.d(TAG, "Size------" + it.size)
                 if (CheckPermission.isPermissionCheck(this)) {
                     exportConfirm()
                     stateExportData()
@@ -91,18 +93,17 @@ class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
          viewModel.startDataExporting(viewModel.heartRateData.value)
          binding.progressBar.visibility = View.VISIBLE
          viewModel.exportStatus.observe(this, Observer {
-             Log.d("ex-data","Status-"+it)
+             Log.d(TAG,"Status-"+it)
              when(it){
-                 "Started"->{
+                Constants.Status.STARTED.name ->{
                      binding.progressBar.progress = 10
                      binding.progressBar.isAnimating
                      binding.progressBar.secondaryProgress = 50
                  }
-                 "Success"->{
+                 Constants.Status.SUCCESSED.name->{
                      exportCompleted()
-                     //viewModel.deleteHeartRateData()
                  }
-                 "Failed"->{
+                 Constants.Status.FAILED.name->{
                      binding.progressBar.visibility = View.GONE
                      Toast.makeText(this,"Export data failed",Toast.LENGTH_SHORT).show()
                  }

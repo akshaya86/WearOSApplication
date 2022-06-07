@@ -8,4 +8,12 @@ class Constants {
         const val DEFAULT_NAME = "Akshaya"
         const val SENSOR_ID = "SENSOR_ID"
     }
+
+    enum class Status {
+        STARTED,
+        SUCCESSED,
+        FAILED
+
+    }
+
 }

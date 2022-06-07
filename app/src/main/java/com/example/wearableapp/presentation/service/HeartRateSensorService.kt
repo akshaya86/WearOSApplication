@@ -52,7 +52,7 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
 
         val notification = NotificationCompat.Builder(this, SENSOR_ID)
             .setContentTitle(this.getString(R.string.sensor_title))
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_heart_full_icon)
             .setContentText(getString(R.string.sensor_desc))
             .setContentIntent(pendingIntent)
         startForeground(1, notification.build())

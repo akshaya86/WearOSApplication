@@ -37,8 +37,8 @@ class HeartRateMeasureRepository(private val heartDataDao: HeartDataDao) :
         }
     }
 
-    override fun insertHeartRateData(heartRateInfo: HeartRateData) {
-        heartDataDao.insertHeartRateData(heartRateInfo.toHeartRateEntity())
+    override fun insertHeartRateData(heartRateData: HeartRateData) {
+        heartDataDao.insertHeartRateData(heartRateData.toHeartRateEntity())
     }
 
     override fun insertAllHeartRateData(heartRateData: List<HeartRateData>) {
@@ -46,7 +46,7 @@ class HeartRateMeasureRepository(private val heartDataDao: HeartDataDao) :
 
     override fun createCSVDataFormat(heartRateData: List<HeartRateData>): Boolean{
         return try {
-            val filename = "${FOLDER_NAME + "_" + Date().time}.csv"
+            val filename = "${FOLDER_NAME + "_" + heartRateData.last().time}.csv"
             val root = Environment.getExternalStorageDirectory()
             val path = File(root.absolutePath + "" + FOLDER_PATH)
             path.mkdirs()
