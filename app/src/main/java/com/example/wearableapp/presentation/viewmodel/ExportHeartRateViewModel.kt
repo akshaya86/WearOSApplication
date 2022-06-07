@@ -5,11 +5,8 @@ import androidx.lifecycle.*
 import com.example.domain.model.HeartRateData
 import com.example.domain.usecase.GetHeartRateDataUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.util.*
 
 class ExportHeartRateViewModel(private val getHeartRateUseCase : GetHeartRateDataUseCase) : ViewModel() {
 

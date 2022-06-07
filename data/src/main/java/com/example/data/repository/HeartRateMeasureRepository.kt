@@ -1,10 +1,7 @@
 package com.example.data.repository
 
-import android.content.Context
 import android.os.Environment
-import android.util.Log
 import com.example.data.database.dao.HeartDataDao
-import com.example.data.database.entity.HeartRateEntity
 import com.example.data.datamodels.base.toHeartRateData
 import com.example.data.datamodels.base.toHeartRateEntity
 import com.example.data.utils.DataConstant.Companion.FOLDER_NAME
@@ -15,7 +12,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import java.io.BufferedWriter
 import java.io.File
@@ -68,8 +64,10 @@ class HeartRateMeasureRepository(private val heartDataDao: HeartDataDao) :
        }
     }
 
-    fun HeartRateData.convertToCSV(): String {
-        return "${this.heartRateBpm},${this.time},${this.name}"
+    companion object {
+        fun HeartRateData.convertToCSV(): String {
+            return "${this.heartRateBpm},${this.time},${this.name}"
+        }
     }
 
 

@@ -37,7 +37,7 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
         notifyApp()
     }
 
-    private fun notifyApp(){
+    fun notifyApp(){
         val intent = Intent(this, MeasureHeartRateActivity::class.java)
         val pendingIntent =
             PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_IMMUTABLE)
@@ -80,8 +80,10 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
 
     private fun insertHeartRateData(heartRate: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-            getHeartRateDataUseCase.insertHeartRateData(HeartRateData(heartRate.toDouble(),Date().time,
-                DEFAULT_NAME))
+            getHeartRateDataUseCase.insertHeartRateData(
+                HeartRateData(heartRate.toDouble(),Date().time,
+                DEFAULT_NAME)
+            )
         }
     }
 
