@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/menu_container"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimens_60dp"
+    android:layout_height="@dimen/dimens_50dp"
     android:background="@drawable/item_selector"
     android:layout_gravity="center_vertical"
     android:layout_marginStart="@dimen/dimens_8dp"

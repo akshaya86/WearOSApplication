@@ -1,6 +1,7 @@
 package com.example.wearableapp.presentation.ui
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -9,7 +10,10 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.domain.model.HeartRateData
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMeasHeartRateBinding
@@ -19,6 +23,9 @@ import com.example.wearableapp.presentation.viewmodel.MeasureHeartRateViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
+import java.util.jar.Manifest
+import kotlin.collections.ArrayList
 
 
 class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.OnClickListener {
@@ -56,7 +63,7 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
     private fun stopAnimation(){
         animator.stop()
         binding.floatLikeId.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
-        binding.heratRateCount.text = "--"
+        binding.heratRateCount.text = "---"
     }
 
     private fun startMeasureHRView(){
@@ -97,8 +104,10 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
             val heartRate = event.values[0]
             binding.heratRateCount.text = heartRate.toInt().toString()
             measureHRList.add(HeartRateData(event.values[0].toDouble(),event.timestamp,DEFAULT_NAME))
-            setHeartGraphData()
         }
+        //remove this line once actual data retrieved
+        measureHRList.add(HeartRateData(0.0, Date().time,""))
+        setHeartGraphData()
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -115,7 +124,7 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
 
     override fun onClick(v: View?) {
        when(v?.id){
-           R.id.tvHeartRateStartId->{startMeasureHRView()}
+           R.id.tvHeartRateStartId->{checkPermission(android.Manifest.permission.BODY_SENSORS,100)}
            R.id.tvHeartRateStopId->{stopMeasureHRView()}
        }
     }
@@ -124,6 +133,30 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
     override fun onDestroy() {
         super.onDestroy()
         measureHRList.clear()
+    }
+
+    private fun checkPermission(permission: String, requestCode: Int) {
+        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
+            // Requesting the permission
+            ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+        } else {
+            startMeasureHRView()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 100) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startMeasureHRView()
+            } else {
+                Toast.makeText(this, "Sensor Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 
