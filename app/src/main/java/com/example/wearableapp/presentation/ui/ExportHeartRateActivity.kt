@@ -6,14 +6,14 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
+import androidx.core.view.postDelayed
 import androidx.lifecycle.Observer
-import com.example.data.coroutine.CoroutineContextProvider
 import com.example.domain.model.HeartRateData
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityExportHeartRateBinding
 import com.example.wearableapp.presentation.utils.CheckPermission
 import com.example.wearableapp.presentation.utils.Constants
+import com.example.wearableapp.presentation.utils.ProgressBarAnimation
 import com.example.wearableapp.presentation.viewmodel.ExportHeartRateViewModel
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -94,12 +94,10 @@ class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
          viewModel.exportStatus.observe(this, Observer {
              when(it){
                  "Started"->{
-                     binding.progressBar.progress = 10
-                     binding.progressBar.isAnimating
-                     binding.progressBar.secondaryProgress = 50
+                    binding.progressBar.progress = 10
                  }
                  "Success"->{
-                     exportCompleted()
+                     setTimerToHideProgressBar()
                  }
                  "Failed"->{
                      binding.progressBar.visibility = View.GONE
@@ -107,5 +105,10 @@ class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
                  }
              }
          })
+    }
+    private fun setTimerToHideProgressBar(){
+        binding.progressBar.postDelayed(Runnable {
+            binding.progressBar.progress = 100
+            exportCompleted()}, 3000)
     }
 }

@@ -32,7 +32,6 @@ class ExportHeartRateViewModel() : ViewModel() {
             if (heartRateData != null) {
                 exportStatus.postValue("Started")
                 if (true) {
-                    delay(2000)
                     exportStatus.postValue("Success")
                 }else
                     exportStatus.postValue("Failed")
