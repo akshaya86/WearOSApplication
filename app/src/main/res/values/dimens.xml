@@ -24,7 +24,9 @@
     <dimen name="font_24sp">24sp</dimen>
 
     <!--Dimens-->
+    <dimen name="dimens_1dp">1dp</dimen>
     <dimen name="dimens_8dp">8dp</dimen>
+    <dimen name="dimens_1.5dp">1.5dp</dimen>
     <dimen name="dimens_10dp">10dp</dimen>
     <dimen name="dimens_15dp">15dp</dimen>
     <dimen name="dimens_20dp">20dp</dimen>
