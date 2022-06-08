@@ -13,7 +13,6 @@ import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityExportHeartRateBinding
 import com.example.wearableapp.presentation.utils.CheckPermission
 import com.example.wearableapp.presentation.utils.Constants
-import com.example.wearableapp.presentation.utils.ProgressBarAnimation
 import com.example.wearableapp.presentation.viewmodel.ExportHeartRateViewModel
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
