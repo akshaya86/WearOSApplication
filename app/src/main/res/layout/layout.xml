@@ -1,27 +1,24 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/menu_container"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_container"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimens_45dp"
-    android:gravity="center"
-    android:layout_gravity="center_vertical">
+    android:layout_height="@dimen/dimens_60dp"
+    android:background="@drawable/item_selector"
+    android:layout_gravity="center_vertical"
+    android:layout_marginStart="@dimen/dimens_8dp"
+    android:layout_marginTop="@dimen/dimens_8dp"
+    android:layout_marginEnd="@dimen/dimens_8dp">
 
     <TextView
         android:id="@+id/menu_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimens_3dp"
-        android:layout_marginTop="@dimen/dimens_3dp"
-        android:layout_marginEnd="@dimen/dimens_3dp"
-        android:layout_marginBottom="@dimen/dimens_3dp"
-        android:background="@drawable/item_selector"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
         android:fontFamily="@font/roboto_regular"
-        android:gravity="center_vertical|center"
-        android:paddingTop="@dimen/dimens_20dp"
-        android:paddingBottom="@dimen/dimens_20dp"
         android:text="@string/menu_item"
         android:textColor="@color/text_color_selector"
         android:textSize="@dimen/font_12sp"
         android:textStyle="normal" />
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

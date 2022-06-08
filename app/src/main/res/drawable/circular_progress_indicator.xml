@@ -19,7 +19,8 @@
             android:type="sweep"
             android:useLevel="false"
             android:startColor="@color/color_berry"
-            android:endColor="#00ffffff"
+            android:centerColor="@android:color/transparent"
+            android:endColor="@color/color_berry"
             android:angle="0"/>
 
     </shape>

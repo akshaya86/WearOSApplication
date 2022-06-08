@@ -12,6 +12,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="color_berry_dark">#69007B</color>
-    <color name="color_berry_trans">#459C27B0</color>
+    <color name="color_berry_dark">#5F006F</color>
+    <color name="color_berry_trans">#69007B</color>
 </resources>
