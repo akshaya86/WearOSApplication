@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/box_inset_layout_padding"
+    android:background="@color/color_black"
+    tools:context=".presentation.ui.ExportHeartRateActivity"
+    tools:deviceIds="wear">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/inner_frame_layout_padding"
+        app:layout_boxedEdges="all">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clExportHeartConfirmId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvHeartExportId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="@dimen/dimens_15dp"
+                    android:paddingBottom="@dimen/dimens_15dp"
+                    android:text="@string/heart_rate_export_message"
+                    android:textColor="@color/color_berry"
+                    android:textSize="@dimen/font_10sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvHeartExConfirmId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimens_40dp"
+                    android:layout_marginEnd="@dimen/dimens_40dp"
+                    android:background="@drawable/rounded_button"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center_horizontal|center"
+                    android:padding="@dimen/dimens_8dp"
+                    android:text="@string/confirm"
+                    android:clickable="true"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/font_10sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHeartExportId" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clExportHeartRateMsgId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvHeartExportUploadingId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center_horizontal"
+                    android:text="@string/heart_rate_export"
+                    android:textColor="@color/color_berry"
+                    android:textSize="@dimen/font_10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvHeartExportedDataId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@drawable/ic_hr_line_icon"
+                    android:drawablePadding="@dimen/dimens_20dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center_horizontal|center"
+                    android:text="@string/heart_rate_exported_data"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_berry"
+                    android:textSize="@dimen/font_10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHeartExportUploadingId" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="20"
+        android:progressDrawable="@drawable/circular_progress_indicator"
+        android:scaleX="1.22"
+        android:scaleY="1.22"
+        android:visibility="gone" />
+
+</androidx.wear.widget.BoxInsetLayout>

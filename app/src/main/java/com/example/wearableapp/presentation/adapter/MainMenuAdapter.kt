@@ -1,4 +1,4 @@
-package com.example.wearableapp.presentation.ui
+package com.example.wearableapp.presentation.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -57,6 +57,10 @@ class MainMenuAdapter() : RecyclerView.Adapter<MainMenuAdapter.RecyclerViewHolde
                 holder.menuItem.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_background))
                 holder.menuItem.setTextColor(it.getColor(R.color.color_berry))
             }
+        }
+
+        if(position == itemCount-1){
+            holder.itemView.visibility =View.INVISIBLE
         }
 
         holder.menuContainer.setOnClickListener {
