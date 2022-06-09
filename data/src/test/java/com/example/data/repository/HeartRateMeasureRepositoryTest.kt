@@ -35,7 +35,7 @@ class HeartRateMeasureRepositoryTest {
     }
 
     @Test
-    fun `check data is inserted `() {
+    fun `check data is inserted `()  = runBlocking {
         val expectedEntity = HeartRateEntity(0, 20.0, 123, "")
         val heartDataList = mutableListOf<HeartRateEntity>()
 
@@ -52,7 +52,7 @@ class HeartRateMeasureRepositoryTest {
     }
 
     @Test
-    fun `check bulk data is inserted `() {
+    fun `check bulk data is inserted `() = runBlocking {
         val expectedEntity = listOf(HeartRateEntity(0, 20.0, 123, ""))
         val heartDataList = mutableListOf<HeartRateEntity>()
 

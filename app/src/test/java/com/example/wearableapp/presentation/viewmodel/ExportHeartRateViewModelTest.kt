@@ -1,7 +1,7 @@
 package com.example.wearableapp.presentation.viewmodel
 
 import com.example.domain.model.HeartRateData
-import com.example.domain.usecase.GetHeartRateDataUseCase
+import com.example.domain.usecase.GetHeartRateOperationsUseCase
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.impl.annotations.InjectMockKs
@@ -27,7 +27,7 @@ class ExportHeartRateViewModelTest{
     lateinit var viewModel: ExportHeartRateViewModel
 
     @InjectMockKs
-    private lateinit var useCase: GetHeartRateDataUseCase
+    private lateinit var useCase: GetHeartRateOperationsUseCase
 
     @BeforeEach
     fun setUp() {

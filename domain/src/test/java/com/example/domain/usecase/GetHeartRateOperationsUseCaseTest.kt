@@ -26,12 +26,12 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-internal class GetHeartRateDataUseCaseTest{
+internal class GetHeartRateOperationsUseCaseTest{
 
     private val dispatcher = TestCoroutineDispatcher()
 
     lateinit var repository: IHeartRateHistoryRepository
-    lateinit var useCase: GetHeartRateDataUseCase
+    lateinit var useCase: GetHeartRateOperationsUseCase
     private val heartData = HeartRateData(10.0, 123,"")
 
     @AfterEach
@@ -43,7 +43,7 @@ internal class GetHeartRateDataUseCaseTest{
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         repository = mockk(relaxed = true)
-        useCase = GetHeartRateDataUseCase(repository)
+        useCase = GetHeartRateOperationsUseCase(repository)
     }
 
     @Test
