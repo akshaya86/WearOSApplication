@@ -153,7 +153,9 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startMeasureHRView()
             } else {
-                Toast.makeText(this, "Sensor Permission Denied", Toast.LENGTH_SHORT).show()
+                binding.tvHeartStartId.text = resources.getString(R.string.sensor_permission_required)
+                binding.tvHeartStartId.setCompoundDrawables(null,null,null,null)
+                binding.tvHeartStartId.setTextColor(resources.getColor(R.color.digital_text))
             }
         }
     }

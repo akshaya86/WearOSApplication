@@ -99,14 +99,14 @@ class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
                      setTimerToHideProgressBar()
                  }
                  "Failed"->{
-                     binding.progressBar.visibility = View.GONE
-                     Toast.makeText(this,"Export data failed",Toast.LENGTH_SHORT).show()
+                     exportCompleted()
+                     binding.tvHeartExportedDataId.text = resources.getString(R.string.export_data_failed)
                  }
              }
          })
     }
     private fun setTimerToHideProgressBar(){
         binding.progressBar.postDelayed(Runnable {
-            exportCompleted()}, 3000)
+            exportCompleted()}, 1000)
     }
 }

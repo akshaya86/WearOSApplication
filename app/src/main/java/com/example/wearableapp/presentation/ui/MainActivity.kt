@@ -2,6 +2,7 @@ package com.example.wearableapp.presentation.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     when (menuPosition) {
                         0 -> startActivity(Intent(this@MainActivity,MeasureHeartRateActivity::class.java))
                         1 -> startActivity(Intent(this@MainActivity,ExportHeartRateActivity::class.java))
-                        else -> Toast.makeText(this@MainActivity,"Item "+menuPosition,Toast.LENGTH_SHORT).show()
+                        else-> Log.d("TAG","ACTION ITEM 3")
                     }
                 }
             })

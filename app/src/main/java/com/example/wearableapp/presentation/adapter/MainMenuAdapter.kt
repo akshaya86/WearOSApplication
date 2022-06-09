@@ -1,11 +1,12 @@
 package com.example.wearableapp.presentation.adapter
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateMargins
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wearableapp.R
 import com.example.wearableapp.presentation.model.MenuItem
@@ -14,6 +15,7 @@ import com.example.wearableapp.presentation.model.MenuItem
 class MainMenuAdapter() : RecyclerView.Adapter<MainMenuAdapter.RecyclerViewHolder>() {
     private var dataSource = ArrayList<MenuItem>()
     private var selectedItem = -1
+    lateinit var recylerview : RecyclerView
 
     interface AdapterCallback {
         fun onItemClicked(menuPosition: Int?)
@@ -46,23 +48,13 @@ class MainMenuAdapter() : RecyclerView.Adapter<MainMenuAdapter.RecyclerViewHolde
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         val (text) = dataSource[position]
-
         holder.menuItem.text = text
-        context?.resources?.let {
-            //holder.menuContainer.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_bg))
-            //holder.menuItem.setTextColor(it.getColor(R.color.color_black))
-        }
-
-        if(selectedItem == position) {
-            context?.resources?.let {
-              //  holder.menuContainer.setBackgroundDrawable(context?.getDrawable(R.drawable.rounded_background))
-               // holder.menuItem.setTextColor(it.getColor(R.color.color_berry))
-            }
-        }
 
         if(position == itemCount-1){
             holder.itemView.visibility =View.INVISIBLE
         }
+
+        setCenteredMargin(holder,position)
 
         holder.menuContainer.setOnClickListener {
             val previousItem = selectedItem
@@ -78,6 +70,22 @@ class MainMenuAdapter() : RecyclerView.Adapter<MainMenuAdapter.RecyclerViewHolde
 
     override fun getItemCount() = dataSource.size
 
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recylerview = recyclerView
+    }
+
+    private fun setCenteredMargin(holder: RecyclerViewHolder, position: Int) {
+        val layoutParams = holder.menuContainer.layoutParams as ViewGroup.MarginLayoutParams
+        val rview = this.recylerview.layoutParams as ViewGroup.MarginLayoutParams
+
+        if (position == 0) {
+             layoutParams.updateMargins(top = rview.height/2 - layoutParams.height/2)
+        }else if(position==2){
+            layoutParams.updateMargins(bottom = layoutParams.height/2)
+        }
+    }
+
     class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var menuContainer: ConstraintLayout
         var menuItem: TextView
@@ -86,5 +94,6 @@ class MainMenuAdapter() : RecyclerView.Adapter<MainMenuAdapter.RecyclerViewHolde
             menuContainer = view.findViewById(R.id.menu_container)
             menuItem = view.findViewById(R.id.menu_item)
         }
+
     }
 }
