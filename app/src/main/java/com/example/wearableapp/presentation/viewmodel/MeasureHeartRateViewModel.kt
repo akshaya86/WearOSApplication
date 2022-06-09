@@ -2,10 +2,10 @@ package com.example.wearableapp.presentation.viewmodel
 
 import androidx.lifecycle.*
 import com.example.domain.model.HeartRateData
-import com.example.domain.usecase.GetHeartRateDataUseCase
+import com.example.domain.usecase.GetHeartRateOperationsUseCase
 import kotlinx.coroutines.*
 
-class MeasureHeartRateViewModel(private val getHeartRateUseCase :GetHeartRateDataUseCase): ViewModel() {
+class MeasureHeartRateViewModel(private val getHeartRateOperationsUseCase :GetHeartRateOperationsUseCase): ViewModel() {
 
     var heartLiveData = MutableLiveData<List<HeartRateData>>()
 
@@ -24,7 +24,7 @@ class MeasureHeartRateViewModel(private val getHeartRateUseCase :GetHeartRateDat
     suspend fun insertData(heartRateData: List<HeartRateData>) {
         CoroutineScope(Dispatchers.IO).launch {
             heartRateData.map {
-                getHeartRateUseCase.insertAllHeartRateData(heartRateData)
+                getHeartRateOperationsUseCase.insertAllHeartRateData(heartRateData)
             }
 
         }
