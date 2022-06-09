@@ -2,7 +2,7 @@
 <rotate xmlns:android="http://schemas.android.com/apk/res/android"
     android:pivotX="50%"
     android:pivotY="50%"
-    android:fromDegrees="90"
+    android:fromDegrees="0"
     android:toDegrees="360">
 
     <shape
@@ -18,7 +18,7 @@
         <gradient
             android:type="sweep"
             android:useLevel="false"
-            android:startColor="@color/color_berry"
+            android:startColor="@color/color_berry_bold"
             android:endColor="@android:color/transparent"
             android:angle="0"/>
 

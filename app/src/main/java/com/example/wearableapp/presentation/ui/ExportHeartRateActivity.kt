@@ -107,7 +107,6 @@ class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
     }
     private fun setTimerToHideProgressBar(){
         binding.progressBar.postDelayed(Runnable {
-            binding.progressBar.progress = 100
             exportCompleted()}, 3000)
     }
 }
