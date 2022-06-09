@@ -9,10 +9,10 @@ interface IHeartRateHistoryRepository {
 
     fun getAllHeartListData():Flow<List<HeartRateData>>
 
-    fun insertHeartRateData(heartRateData: HeartRateData)
+    suspend fun insertHeartRateData(heartRateData: HeartRateData)
 
     fun createCSVDataFormat(heartRateData: List<HeartRateData>):Boolean
 
-    fun insertAllHeartRateData(heartRateData: List<HeartRateData>)
+    suspend fun insertAllHeartRateData(heartRateData: List<HeartRateData>)
 
 }

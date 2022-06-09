@@ -13,7 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.example.domain.model.HeartRateData
-import com.example.domain.usecase.GetHeartRateDataUseCase
+import com.example.domain.usecase.GetHeartRateOperationsUseCase
 import com.example.wearableapp.R
 import com.example.wearableapp.presentation.ui.MeasureHeartRateActivity
 import com.example.wearableapp.presentation.utils.Constants.Companion.DEFAULT_NAME
@@ -26,7 +26,7 @@ import java.util.*
 
 class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComponent {
 
-    private val getHeartRateDataUseCase : GetHeartRateDataUseCase by inject()
+    private val getHeartRateOperationsUseCase : GetHeartRateOperationsUseCase by inject()
 
     companion object {
         var isServiceRunning = false
@@ -58,7 +58,7 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
         startForeground(1, notification.build())
 
         lifecycleScope.launchWhenCreated {
-            getHeartRateDataUseCase.deleteHeartRateData()
+            getHeartRateOperationsUseCase.deleteHeartRateData()
         }
     }
 
@@ -80,7 +80,7 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
 
     private fun insertHeartRateData(heartRate: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-            getHeartRateDataUseCase.insertHeartRateData(HeartRateData(heartRate.toDouble(),Date().time,
+            getHeartRateOperationsUseCase.insertHeartRateData(HeartRateData(heartRate.toDouble(),Date().time,
                 DEFAULT_NAME))
         }
     }

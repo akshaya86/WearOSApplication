@@ -37,11 +37,11 @@ class HeartRateMeasureRepository(private val heartDataDao: HeartDataDao) :
         }
     }
 
-    override fun insertHeartRateData(heartRateData: HeartRateData) {
+    override suspend fun insertHeartRateData(heartRateData: HeartRateData) {
         heartDataDao.insertHeartRateData(heartRateData.toHeartRateEntity())
     }
 
-    override fun insertAllHeartRateData(heartRateData: List<HeartRateData>) {
+    override suspend fun insertAllHeartRateData(heartRateData: List<HeartRateData>) {
         heartDataDao.insertAllHeartRateData(heartRateData.map { it.toHeartRateEntity() }) }
 
     override fun createCSVDataFormat(heartRateData: List<HeartRateData>): Boolean{

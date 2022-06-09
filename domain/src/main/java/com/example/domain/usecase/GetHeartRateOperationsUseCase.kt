@@ -4,7 +4,7 @@ import com.example.domain.model.HeartRateData
 import com.example.domain.repository.IHeartRateHistoryRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetHeartRateDataUseCase(private val repository: IHeartRateHistoryRepository) {
+class GetHeartRateOperationsUseCase(private val repository: IHeartRateHistoryRepository) {
 
     fun getAllHeartListData(): Flow<List<HeartRateData>> {
         return repository.getAllHeartListData()

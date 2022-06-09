@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface HeartDataDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertHeartRateData(heartRate: HeartRateEntity)
+    suspend fun insertHeartRateData(heartRate: HeartRateEntity)
 
     @Query("SELECT * FROM HEARTRATE")
     fun retrieveAllHeartRateData(): Flow<List<HeartRateEntity>>
@@ -18,5 +18,5 @@ interface HeartDataDao {
     suspend fun deleteHeartRateData()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllHeartRateData(list: List<HeartRateEntity>)
+    suspend fun insertAllHeartRateData(list: List<HeartRateEntity>)
 }
