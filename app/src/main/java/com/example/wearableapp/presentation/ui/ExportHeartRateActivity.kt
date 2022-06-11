@@ -6,16 +6,12 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.data.coroutine.CoroutineContextProvider
-import com.example.domain.model.HeartRateData
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityExportHeartRateBinding
 import com.example.wearableapp.presentation.utils.CheckPermission
 import com.example.wearableapp.presentation.utils.Constants
 import com.example.wearableapp.presentation.viewmodel.ExportHeartRateViewModel
-import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {

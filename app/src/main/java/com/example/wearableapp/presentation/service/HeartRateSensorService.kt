@@ -37,7 +37,7 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
         notifyApp()
     }
 
-    private fun notifyApp(){
+    fun notifyApp(){
         val intent = Intent(this, MeasureHeartRateActivity::class.java)
         val pendingIntent =
             PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_IMMUTABLE)
