@@ -25,7 +25,7 @@ import java.util.*
 class MyDigitalWatchFace : CanvasWatchFaceService() {
 
     companion object {
-        private val NORMAL_TYPEFACE = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
+        //private val NORMAL_TYPEFACE = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
 
         /**
          * Updates rate in milliseconds for interactive mode. We update once a second since seconds
@@ -103,10 +103,11 @@ class MyDigitalWatchFace : CanvasWatchFaceService() {
             mBackgroundPaint = Paint().apply {
                 color = ContextCompat.getColor(applicationContext, R.color.background)
             }
+            val tf = Typeface.create(Typeface.createFromAsset(applicationContext.assets,"roboto_regular.ttf"),Typeface.NORMAL)
 
             // Initializes Watch Face.
             mTextPaint = Paint().apply {
-                typeface = NORMAL_TYPEFACE
+                typeface = tf
                 isAntiAlias = true
                 color = ContextCompat.getColor(
                     applicationContext,
@@ -170,11 +171,11 @@ class MyDigitalWatchFace : CanvasWatchFaceService() {
         }
 
         override fun onDraw(canvas: Canvas, bounds: Rect) {
-
-            val bitmap =
+            changeBackground(bounds)
+           /* val bitmap =
                 BitmapFactory.decodeResource(resources, R.drawable.watchafce_digital_circular)
             val scaledBitmap = Bitmap.createScaledBitmap(bitmap,canvas.width,canvas.height,true)
-            canvas.drawBitmap(scaledBitmap, 0f, 0f, null)
+            canvas.drawBitmap(scaledBitmap, 0f, 0f, null)*/
 
             // Draw HH:MM in ambient mode or H:MM:SS in interactive mode.
             val now = System.currentTimeMillis()
@@ -192,12 +193,14 @@ class MyDigitalWatchFace : CanvasWatchFaceService() {
             ).format(Calendar.getInstance().time)
 
 
+            val tf = Typeface.create(Typeface.createFromAsset(applicationContext.assets,
+                "roboto_regular.ttf"),Typeface.NORMAL)
 
-            mYOffset = bitmap.height - resources.getDimension(R.dimen.dimens_140dp)
+           // mYOffset = bitmap.height - resources.getDimension(R.dimen.dimens_140dp)
             mXOffset = (canvas.width / 4.99).toFloat()
             canvas.drawText(nowTime, mXOffset, mYOffset, mTextPaint)
             val textColor = Paint().apply {
-                typeface = NORMAL_TYPEFACE
+                typeface = tf
                 isAntiAlias = true
                 color = ContextCompat.getColor(
                     applicationContext,
@@ -297,5 +300,16 @@ class MyDigitalWatchFace : CanvasWatchFaceService() {
                 mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs)
             }
         }
+    }
+
+    private fun changeBackground(bounds: Rect) {
+        val mainPaint = Paint()
+        val colors = intArrayOf( Color.BLACK, Color.BLACK, applicationContext.getColor(R.color.color_berry), Color.BLACK, )
+        val backgroundColor = SweepGradient( bounds.exactCenterX(), bounds.exactCenterY(), colors, null )
+
+        val matrix = Matrix()
+        matrix.preRotate(27f, bounds.exactCenterX(), bounds.exactCenterY())
+        backgroundColor.setLocalMatrix(matrix)
+        mainPaint.shader = backgroundColor
     }
 }
