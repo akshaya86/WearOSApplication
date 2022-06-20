@@ -1,18 +1,19 @@
 package com.example.wearableapp.presentation.service
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Build
+import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.example.domain.model.HeartRateData
+import com.example.domain.repository.IHeartRateHistoryRepository
 import com.example.domain.usecase.GetHeartRateOperationsUseCase
 import com.example.wearableapp.R
 import com.example.wearableapp.presentation.ui.MeasureHeartRateActivity
@@ -24,9 +25,12 @@ import org.koin.core.KoinComponent
 import java.util.*
 
 
-class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComponent {
+class HeartRateSensorService : Service(), SensorEventListener, KoinComponent {
 
-    private val getHeartRateOperationsUseCase : GetHeartRateOperationsUseCase by inject()
+    private val repository : IHeartRateHistoryRepository by inject()
+    private lateinit var mSensorManager: SensorManager
+    private lateinit var mHeartSensor: Sensor
+
 
     companion object {
         var isServiceRunning = false
@@ -34,7 +38,6 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
 
     override fun onCreate() {
         super.onCreate()
-        notifyApp()
     }
 
     fun notifyApp(){
@@ -54,17 +57,20 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
             .setContentTitle(this.getString(R.string.sensor_title))
             .setSmallIcon(R.drawable.ic_heart_full_icon)
             .setContentText(getString(R.string.sensor_desc))
+            .setOngoing(true)
             .setContentIntent(pendingIntent)
         startForeground(1, notification.build())
 
-        lifecycleScope.launchWhenCreated {
+       /* lifecycleScope.launchWhenCreated {
             getHeartRateOperationsUseCase.deleteHeartRateData()
-        }
+        }*/
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         isServiceRunning = true
+        notifyApp()
+        registerService()
         return START_STICKY
     }
 
@@ -72,7 +78,7 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
         event?.apply {
             if (sensor.type == Sensor.TYPE_HEART_RATE && values.isNotEmpty()) {
                 val heartRate = values[0]
-                Log.e("Senesor called from:", "$heartRate")
+                Log.e("Senesor called from:Service", "$heartRate")
                 insertHeartRateData(heartRate.toInt())
             }
         }
@@ -80,7 +86,7 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
 
     private fun insertHeartRateData(heartRate: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-            getHeartRateOperationsUseCase.insertHeartRateData(HeartRateData(heartRate.toDouble(),Date().time,
+            repository.insertHeartRateData(HeartRateData(heartRate.toDouble(),Date().time,
                 DEFAULT_NAME))
         }
     }
@@ -91,5 +97,16 @@ class HeartRateSensorService : LifecycleService(), SensorEventListener, KoinComp
     override fun onDestroy() {
         super.onDestroy()
         isServiceRunning = false
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+       return null
+    }
+
+    private fun registerService(){
+        mSensorManager = (getSystemService(SENSOR_SERVICE) as SensorManager)
+        mHeartSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE)
+        mSensorManager.registerListener(this, mHeartSensor, SensorManager.SENSOR_DELAY_FASTEST)
+
     }
 }

@@ -2,37 +2,29 @@ package com.example.wearableapp.presentation.ui
 
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.domain.model.HeartRateData
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMeasHeartRateBinding
 import com.example.wearableapp.presentation.adapter.HeartDataAdapter
 import com.example.wearableapp.presentation.service.HeartRateSensorService
-import com.example.wearableapp.presentation.utils.Constants.Companion.DEFAULT_NAME
+import com.example.wearableapp.presentation.utils.CheckPermission
 import com.example.wearableapp.presentation.viewmodel.MeasureHeartRateViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.collections.ArrayList
 
 
-class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.OnClickListener {
+class MeasureHeartRateActivity : AppCompatActivity(){
 
     val TAG = MeasureHeartRateActivity::class.simpleName
     private lateinit var binding: ActivityMeasHeartRateBinding
 
     private val viewModel by viewModel<MeasureHeartRateViewModel>()
-
-    private var mSensorManager: SensorManager? = null
-    private var mHeartSensor: Sensor? = null
 
     private var measureHRList = ArrayList<HeartRateData>()
 
@@ -44,17 +36,39 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
         binding = ActivityMeasHeartRateBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setListeners()
-        checkSensorIsAvailable()
+        viewModel.getSavedData().observe(this, Observer {
+            if(it.isNotEmpty()) {
+                Log.d(TAG, "Saved Value:" + it.last().heartRateBpm)
+                measureHRList.addAll(it)
+                if (binding.clHeartStopId.visibility == View.VISIBLE) {
+                    binding.heratRateCount.text = it.last().heartRateBpm.toString()
+                }
+                setHeartGraphData()
+            }
+        })
     }
 
+
     private fun setListeners() {
-        binding.tvHeartRateStartId.setOnClickListener(this)
-        binding.tvHeartRateStopId.setOnClickListener(this)
+        binding.tvHeartRateStartId.setOnClickListener{
+            if (CheckPermission.isPermissionCheck(this)) {
+                startMeasureHRView()
+            }else{
+                Toast.makeText(this,"Sensor permission required",Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.tvHeartRateStopId.setOnClickListener{
+            stopMeasureHRView()
+        }
     }
 
     private fun startAnimation(){
         binding.floatLikeId.setBackgroundResource(R.drawable.animation_list)
         animator = binding.floatLikeId.background as AnimationDrawable
+         if(measureHRList.isNotEmpty()){
+             binding.heratRateCount.text = measureHRList.last().heartRateBpm.toString()}else{
+             binding.heratRateCount.text = "0.0"
+         }
         animator.start()
     }
 
@@ -68,46 +82,19 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
         binding.clHeartStartId.visibility = View.GONE
         binding.clHeartStopId.visibility = View.VISIBLE
         startAnimation()
-        mSensorManager?.registerListener(
-            this,
-            mHeartSensor,
-            SensorManager.SENSOR_DELAY_FASTEST
-        );
     }
 
     private fun stopMeasureHRView(){
         stopAnimation()
         binding.clHeartStartId.visibility = View.VISIBLE
         binding.clHeartStopId.visibility = View.GONE
-        mSensorManager?.unregisterListener(this)
-    }
-
-    private fun getSensorData() {
-        mSensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
-        mHeartSensor = mSensorManager?.getDefaultSensor(Sensor.TYPE_HEART_RATE)
     }
 
     override fun onResume() {
         super.onResume()
-        getSensorData()
+        checkSensorIsAvailable()
     }
 
-    override fun onPause() {
-        super.onPause()
-
-    }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-        if (event != null) {
-            val heartRate = event.values[0]
-            binding.heratRateCount.text = heartRate.toInt().toString()
-            measureHRList.add(HeartRateData(event.values[0].toDouble(),event.timestamp,DEFAULT_NAME))
-            setHeartGraphData()
-        }
-    }
-
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-    }
 
     private fun setHeartGraphData(){
         binding.heartRateGraphId.let {
@@ -118,29 +105,16 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
         binding.heartRateGraphId.adapter = HeartDataAdapter(viewModel.setDummyHeartData(measureHRList))
     }
 
-    override fun onClick(v: View?) {
-       when(v?.id){
-           R.id.tvHeartRateStartId->{startMeasureHRView();
-                                     addHeartRateData()}
-           R.id.tvHeartRateStopId->{stopMeasureHRView()}
-       }
-    }
-
-    private fun addHeartRateData() {
-        Log.d(TAG, "" + measureHRList.size.toString())
-        lifecycleScope.launch(Dispatchers.IO){
-            viewModel.insertData(measureHRList)
-        }
-    }
-
     private fun checkSensorIsAvailable(){
         startForegroundService(Intent(this, HeartRateSensorService::class.java))
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        measureHRList.clear()
+        false
     }
+
+
 
 
 

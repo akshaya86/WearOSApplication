@@ -9,15 +9,16 @@ class MeasureHeartRateViewModel(private val getHeartRateOperationsUseCase :GetHe
 
     var heartLiveData = MutableLiveData<List<HeartRateData>>()
 
-    fun setDummyHeartData(measureHRList: ArrayList<HeartRateData>): ArrayList<Float> {
+    fun setDummyHeartData(measureHRList: List<HeartRateData>?): ArrayList<Float> {
         var heartDataList = ArrayList<Float>()
-        if(measureHRList.isNotEmpty()) {
+        heartDataList.clear()
+        if(!measureHRList.isNullOrEmpty()) {
             measureHRList.forEach {
-                heartDataList.add(it.heartRateBpm?.toFloat() ?: 0.1f)
+                heartDataList.add(it.heartRateBpm?.toFloat() ?: 1f)
             }
-        }else
-            heartDataList.add(0.1f)
-
+        }else {
+            heartDataList.add(1f)
+        }
         return heartDataList
     }
 
@@ -29,5 +30,11 @@ class MeasureHeartRateViewModel(private val getHeartRateOperationsUseCase :GetHe
 
         }
     }
+
+    fun getSavedData(): LiveData<List<HeartRateData>> {
+        heartLiveData.value =getHeartRateOperationsUseCase.getAllHeartListData().asLiveData().value
+        return getHeartRateOperationsUseCase.getAllHeartListData().asLiveData()}
+
+
 
 }

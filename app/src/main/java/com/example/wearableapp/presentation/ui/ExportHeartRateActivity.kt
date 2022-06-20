@@ -14,7 +14,7 @@ import com.example.wearableapp.presentation.utils.Constants
 import com.example.wearableapp.presentation.viewmodel.ExportHeartRateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
+class ExportHeartRateActivity : AppCompatActivity() {
 
     val TAG = ExportHeartRateActivity::class.simpleName
     private lateinit var binding: ActivityExportHeartRateBinding
@@ -30,14 +30,8 @@ class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setListeners() {
-        binding.tvHeartExConfirmId.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            R.id.tvHeartExConfirmId -> {
-                getDataForExport()
-            }
+        binding.tvHeartExConfirmId.setOnClickListener{
+            getDataForExport()
         }
     }
 

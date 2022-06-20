@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wearableapp.databinding.ActivityMainBinding
 import com.example.wearableapp.presentation.adapter.MainMenuAdapter
-import com.example.wearableapp.presentation.service.HeartRateSensorService
 import com.example.wearableapp.presentation.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
