@@ -6,20 +6,17 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.postDelayed
 import androidx.lifecycle.Observer
-import com.example.domain.model.HeartRateData
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityExportHeartRateBinding
 import com.example.wearableapp.presentation.utils.CheckPermission
 import com.example.wearableapp.presentation.utils.Constants
 import com.example.wearableapp.presentation.viewmodel.ExportHeartRateViewModel
-import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
-class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
+class ExportHeartRateActivity : AppCompatActivity() {
 
+    val TAG = ExportHeartRateActivity::class.simpleName
     private lateinit var binding: ActivityExportHeartRateBinding
     private val viewModel by viewModel<ExportHeartRateViewModel>()
 
@@ -33,21 +30,16 @@ class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setListeners() {
-        binding.tvHeartExConfirmId.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            R.id.tvHeartExConfirmId -> {
-                getDataForExport()
-            }
+        binding.tvHeartExConfirmId.setOnClickListener{
+            getDataForExport()
         }
     }
 
     private fun getDataForExport(){
         viewModel.getAllHearRateData().observe(this, Observer {
             if(it.isNotEmpty()) {
-                Log.d("Data", "Size------" + it.size)
+                viewModel.heartRateData.value = it
+                Log.d(TAG, "Size------" + it.size)
                 if (CheckPermission.isPermissionCheck(this)) {
                     exportConfirm()
                     stateExportData()
@@ -88,17 +80,18 @@ class ExportHeartRateActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun stateExportData() {
-         viewModel.startDataExporting(listOf(HeartRateData(40.0, Date().time,Constants.DEFAULT_NAME)))
+         viewModel.startDataExporting(viewModel.heartRateData.value)
          binding.progressBar.visibility = View.VISIBLE
          viewModel.exportStatus.observe(this, Observer {
+             Log.d(TAG,"Status-"+it)
              when(it){
-                 "Started"->{
-                    binding.progressBar.progress = 10
-                 }
-                 "Success"->{
+                Constants.Status.STARTED.name ->{
+                     binding.progressBar.progress = 10
+                }
+                 Constants.Status.SUCCESSED.name->{
                      setTimerToHideProgressBar()
                  }
-                 "Failed"->{
+                 Constants.Status.FAILED.name->{
                      exportCompleted()
                      binding.tvHeartExportedDataId.text = resources.getString(R.string.export_data_failed)
                  }

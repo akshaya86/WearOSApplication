@@ -18,6 +18,10 @@
     <string name="sensor_notification">Sensor Notification</string>
     <string name="sensor_title">Heart Rate Monitor</string>
     <string name="sensor_desc">Heart Rate Monitoring is started</string>
+    <string name="title_activity_export_heart_rate">ExportHeartRateActivity</string>
+    <string name="sensor_notification">Sensor Notification</string>
+    <string name="sensor_title">Heart Rate Monitor</string>
+    <string name="sensor_desc">Heart Rate Monitoring is started</string>
     <string name="sensor_permission_required">App need sensor permission to monitor heart rate</string>
     <string name="export_data_failed">Heart rate data exporting failed</string>
 </resources>
