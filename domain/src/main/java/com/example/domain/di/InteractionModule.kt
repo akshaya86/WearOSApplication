@@ -1,9 +1,9 @@
 package com.example.domain.di
 
-import com.example.domain.usecase.IGetHeartRateUseCase
-import com.example.domain.usecase.GetHeartRateUseCase
+import com.example.domain.usecase.GetHeartRateOperationsUseCase
 import org.koin.dsl.module
 
 val interactionModule = module {
-    factory<IGetHeartRateUseCase> { GetHeartRateUseCase(get()) }
+    factory { GetHeartRateOperationsUseCase(get()) }
+
 }

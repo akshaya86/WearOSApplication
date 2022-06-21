@@ -2,20 +2,21 @@ package com.example.data.database.dao
 
 import androidx.room.*
 import com.example.data.database.HR_TABLE_NAME
-import com.example.data.database.entity.HeartDataEntity
+import com.example.data.database.entity.HeartRateEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HeartDataDao {
 
-    @Transaction
-    suspend fun updateHeartDetails(heartData: HeartDataEntity): HeartDataEntity {
-        insertHeartRateData(heartData)
-        return retrieveHeartRateData(heartData.name ?: "")
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertHeartRateData(heartRate: HeartRateEntity)
+
+    @Query("SELECT * FROM HEARTRATE")
+    fun retrieveAllHeartRateData(): Flow<List<HeartRateEntity>>
+
+    @Query("DELETE FROM HEARTRATE")
+    suspend fun deleteHeartRateData()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertHeartRateData(heartRate: HeartDataEntity)
-
-    @Query("SELECT * FROM $HR_TABLE_NAME WHERE name = :name LIMIT 1")
-    suspend fun retrieveHeartRateData(name: String): HeartDataEntity
+    suspend fun insertAllHeartRateData(list: List<HeartRateEntity>)
 }
