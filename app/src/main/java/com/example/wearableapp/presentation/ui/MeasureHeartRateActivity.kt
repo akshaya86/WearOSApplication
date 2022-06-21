@@ -1,13 +1,16 @@
 package com.example.wearableapp.presentation.ui
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
+import android.hardware.SensorEventListener
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.domain.model.HeartRateData
 import com.example.wearableapp.R
@@ -19,9 +22,10 @@ import com.example.wearableapp.presentation.viewmodel.MeasureHeartRateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MeasureHeartRateActivity : AppCompatActivity(){
+class MeasureHeartRateActivity : AppCompatActivity(),View.OnClickListener {
 
-    val TAG = MeasureHeartRateActivity::class.simpleName
+    private val TAG = MeasureHeartRateActivity::class.java.name
+
     private lateinit var binding: ActivityMeasHeartRateBinding
 
     private val viewModel by viewModel<MeasureHeartRateViewModel>()
@@ -50,16 +54,8 @@ class MeasureHeartRateActivity : AppCompatActivity(){
 
 
     private fun setListeners() {
-        binding.tvHeartRateStartId.setOnClickListener{
-            if (CheckPermission.isPermissionCheck(this)) {
-                startMeasureHRView()
-            }else{
-                Toast.makeText(this,"Sensor permission required",Toast.LENGTH_SHORT).show()
-            }
-        }
-        binding.tvHeartRateStopId.setOnClickListener{
-            stopMeasureHRView()
-        }
+        binding.tvHeartRateStartId.setOnClickListener(this)
+        binding.tvHeartRateStopId.setOnClickListener(this)
     }
 
     private fun startAnimation(){
@@ -75,7 +71,7 @@ class MeasureHeartRateActivity : AppCompatActivity(){
     private fun stopAnimation(){
         animator.stop()
         binding.floatLikeId.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
-        binding.heratRateCount.text = "--"
+        binding.heratRateCount.text = "---"
     }
 
     private fun startMeasureHRView(){
@@ -109,12 +105,43 @@ class MeasureHeartRateActivity : AppCompatActivity(){
         startForegroundService(Intent(this, HeartRateSensorService::class.java))
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        false
+    override fun onClick(v: View?) {
+       when(v?.id){
+           R.id.tvHeartRateStartId->{checkPermission(android.Manifest.permission.BODY_SENSORS,100)}
+           R.id.tvHeartRateStopId->{stopMeasureHRView()}
+       }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        measureHRList.clear()
+    }
 
+    private fun checkPermission(permission: String, requestCode: Int) {
+        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
+            // Requesting the permission
+            ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+        } else {
+            startMeasureHRView()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 100) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startMeasureHRView()
+            } else {
+                binding.tvHeartStartId.text = resources.getString(R.string.sensor_permission_required)
+                binding.tvHeartStartId.setCompoundDrawables(null,null,null,null)
+                binding.tvHeartStartId.setTextColor(resources.getColor(R.color.digital_text))
+            }
+        }
+    }
 
 
 

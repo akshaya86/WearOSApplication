@@ -4,44 +4,28 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.Typeface
+import android.graphics.*
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.os.Message
-import androidx.core.content.ContextCompat
 import android.support.wearable.watchface.CanvasWatchFaceService
 import android.support.wearable.watchface.WatchFaceService
 import android.support.wearable.watchface.WatchFaceStyle
 import android.view.SurfaceHolder
 import android.view.WindowInsets
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.wearableapp.R
-
+import com.example.wearableapp.presentation.ui.MainActivity
 import java.lang.ref.WeakReference
-import java.util.Calendar
-import java.util.TimeZone
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
-/**
- * Digital watch face with seconds. In ambient mode, the seconds aren"t displayed. On devices with
- * low-bit ambient mode, the text is drawn without anti-aliasing in ambient mode.
- *
- *
- * Important Note: Because watch face apps do not have a default Activity in
- * their project, you will need to set your Configurations to
- * "Do not launch Activity" for both the Wear and/or Application modules. If you
- * are unsure how to do this, please review the "Run Starter project" section
- * in the Google Watch Face Code Lab:
- * https://codelabs.developers.google.com/codelabs/watchface/index.html#0
- */
-class MyWatchFaceDigital : CanvasWatchFaceService() {
+class MyDigitalWatchFace : CanvasWatchFaceService() {
 
     companion object {
-        private val NORMAL_TYPEFACE = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
+        //private val NORMAL_TYPEFACE = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
 
         /**
          * Updates rate in milliseconds for interactive mode. We update once a second since seconds
@@ -59,10 +43,8 @@ class MyWatchFaceDigital : CanvasWatchFaceService() {
         return Engine()
     }
 
-    private class EngineHandler(reference: MyWatchFaceDigital.Engine) :
-        Handler(Looper.myLooper()!!) {
-        private val mWeakReference: WeakReference<MyWatchFaceDigital.Engine> =
-            WeakReference(reference)
+    private class EngineHandler(reference: MyDigitalWatchFace.Engine) : Handler() {
+        private val mWeakReference: WeakReference<MyDigitalWatchFace.Engine> = WeakReference(reference)
 
         override fun handleMessage(msg: Message) {
             val engine = mWeakReference.get()
@@ -107,26 +89,30 @@ class MyWatchFaceDigital : CanvasWatchFaceService() {
             super.onCreate(holder)
 
             setWatchFaceStyle(
-                WatchFaceStyle.Builder(this@MyWatchFaceDigital)
+                WatchFaceStyle.Builder(this@MyDigitalWatchFace)
                     .setAcceptsTapEvents(true)
                     .build()
             )
 
             mCalendar = Calendar.getInstance()
 
-            val resources = this@MyWatchFaceDigital.resources
+            val resources = this@MyDigitalWatchFace.resources
             mYOffset = resources.getDimension(R.dimen.digital_y_offset)
 
             // Initializes background.
             mBackgroundPaint = Paint().apply {
                 color = ContextCompat.getColor(applicationContext, R.color.background)
             }
+            val tf = Typeface.create(Typeface.createFromAsset(applicationContext.assets,"roboto_regular.ttf"),Typeface.NORMAL)
 
             // Initializes Watch Face.
             mTextPaint = Paint().apply {
-                typeface = NORMAL_TYPEFACE
+                typeface = tf
                 isAntiAlias = true
-                color = ContextCompat.getColor(applicationContext, R.color.digital_text)
+                color = ContextCompat.getColor(
+                    applicationContext,
+                    R.color.color_berry
+                )
             }
         }
 
@@ -175,40 +161,55 @@ class MyWatchFaceDigital : CanvasWatchFaceService() {
                 WatchFaceService.TAP_TYPE_TOUCH_CANCEL -> {
                     // The user has started a different gesture or otherwise cancelled the tap.
                 }
-                WatchFaceService.TAP_TYPE_TAP ->
+                WatchFaceService.TAP_TYPE_TAP -> {
                     // The user has completed the tap gesture.
-                    // TODO: Add code to handle the tap gesture.
-                    Toast.makeText(applicationContext, R.string.message, Toast.LENGTH_SHORT)
-                        .show()
+                    startActivity(Intent(this@MyDigitalWatchFace,MainActivity::class.java))
+                }
+
             }
             invalidate()
         }
 
         override fun onDraw(canvas: Canvas, bounds: Rect) {
-            // Draw the background.
-            if (mAmbient) {
-               canvas.drawColor(Color.BLUE)
-            } else {
-                canvas.drawRect(
-                    0f, 0f, bounds.width().toFloat(), bounds.height().toFloat(), mBackgroundPaint
-                )
-            }
+            changeBackground(bounds)
+           /* val bitmap =
+                BitmapFactory.decodeResource(resources, R.drawable.watchafce_digital_circular)
+            val scaledBitmap = Bitmap.createScaledBitmap(bitmap,canvas.width,canvas.height,true)
+            canvas.drawBitmap(scaledBitmap, 0f, 0f, null)*/
 
-            // Draw H:MM in ambient mode or H:MM:SS in interactive mode.
+            // Draw HH:MM in ambient mode or H:MM:SS in interactive mode.
             val now = System.currentTimeMillis()
             mCalendar.timeInMillis = now
 
-            val text = if (mAmbient)
-                String.format(
-                    "%02d:%02d", mCalendar.get(Calendar.HOUR),
-                    mCalendar.get(Calendar.MINUTE)
+
+            val timeFormat = "h:mm a"
+            val nowTime = LocalTime.now().format(DateTimeFormatter.ofPattern(timeFormat))
+
+            val dateFormat = "MMM dd yyyy"
+
+            val formatedDate = SimpleDateFormat(
+                dateFormat,
+                Locale.getDefault()
+            ).format(Calendar.getInstance().time)
+
+
+            val tf = Typeface.create(Typeface.createFromAsset(applicationContext.assets,
+                "roboto_regular.ttf"),Typeface.NORMAL)
+
+           // mYOffset = bitmap.height - resources.getDimension(R.dimen.dimens_140dp)
+            mXOffset = (canvas.width / 4.99).toFloat()
+            canvas.drawText(nowTime, mXOffset, mYOffset, mTextPaint)
+            val textColor = Paint().apply {
+                typeface = tf
+                isAntiAlias = true
+                color = ContextCompat.getColor(
+                    applicationContext,
+                    R.color.color_berry
                 )
-            else
-                String.format(
-                    "%02d:%02d:%02d", mCalendar.get(Calendar.HOUR),
-                    mCalendar.get(Calendar.MINUTE), mCalendar.get(Calendar.SECOND)
-                )
-            canvas.drawText(text, mXOffset, mYOffset, mTextPaint)
+            }
+            textColor.textSize = resources.getDimension(R.dimen.font_14sp)
+            canvas.drawText(formatedDate, mXOffset + resources.getDimension(R.dimen.dimens_50dp),
+                mYOffset + resources.getDimension(R.dimen.font_14sp), textColor)
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
@@ -235,7 +236,7 @@ class MyWatchFaceDigital : CanvasWatchFaceService() {
             }
             mRegisteredTimeZoneReceiver = true
             val filter = IntentFilter(Intent.ACTION_TIMEZONE_CHANGED)
-            this@MyWatchFaceDigital.registerReceiver(mTimeZoneReceiver, filter)
+            this@MyDigitalWatchFace.registerReceiver(mTimeZoneReceiver, filter)
         }
 
         private fun unregisterReceiver() {
@@ -243,14 +244,14 @@ class MyWatchFaceDigital : CanvasWatchFaceService() {
                 return
             }
             mRegisteredTimeZoneReceiver = false
-            this@MyWatchFaceDigital.unregisterReceiver(mTimeZoneReceiver)
+            this@MyDigitalWatchFace.unregisterReceiver(mTimeZoneReceiver)
         }
 
         override fun onApplyWindowInsets(insets: WindowInsets) {
             super.onApplyWindowInsets(insets)
 
             // Load resources that have alternate values for round watches.
-            val resources = this@MyWatchFaceDigital.resources
+            val resources = this@MyDigitalWatchFace.resources
             val isRound = insets.isRound
             mXOffset = resources.getDimension(
                 if (isRound)
@@ -299,5 +300,16 @@ class MyWatchFaceDigital : CanvasWatchFaceService() {
                 mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs)
             }
         }
+    }
+
+    private fun changeBackground(bounds: Rect) {
+        val mainPaint = Paint()
+        val colors = intArrayOf( Color.BLACK, Color.BLACK, applicationContext.getColor(R.color.color_berry), Color.BLACK, )
+        val backgroundColor = SweepGradient( bounds.exactCenterX(), bounds.exactCenterY(), colors, null )
+
+        val matrix = Matrix()
+        matrix.preRotate(27f, bounds.exactCenterX(), bounds.exactCenterY())
+        backgroundColor.setLocalMatrix(matrix)
+        mainPaint.shader = backgroundColor
     }
 }

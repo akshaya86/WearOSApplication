@@ -7,12 +7,12 @@ class MainViewModel: ViewModel() {
 
     fun getMenuList(): ArrayList<MenuItem> {
         val menuItems: ArrayList<MenuItem> = ArrayList()
-        for (i in 1..4){
-            if(i==1)
+        for (i in 0..3){
+            if(i==0)
                 menuItems.add(MenuItem( "Measure HR "))
-            if(i==2) menuItems.add(MenuItem( "Export HR Data "))
-            if(i>2)
-                menuItems.add(MenuItem( "Item "+i))
+            if(i==1) menuItems.add(MenuItem( "Export HR data "))
+            if(i>1)
+                menuItems.add(MenuItem( "Action "))
 
         }
         return menuItems

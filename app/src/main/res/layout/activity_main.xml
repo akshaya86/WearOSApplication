@@ -4,42 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical"
-    android:background="@color/color_black"
     android:padding="@dimen/box_inset_layout_padding"
+    android:layout_gravity="center"
+    android:background="@color/color_black"
     tools:context=".presentation.ui.MainActivity"
     tools:deviceIds="wear">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.wear.widget.WearableRecyclerView
+        android:id="@+id/rvListId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/dimens_140dp"
+        android:scrollbars="vertical"
+       tools:listitem="@layout/layout" />
 
-        <androidx.wear.widget.WearableRecyclerView
-            android:id="@+id/rvListId"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimens_140dp"
-            android:scrollbars="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/layout" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!--
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_boxedEdges="all">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center">
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-    -->
+</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.wear.widget.BoxInsetLayout>
