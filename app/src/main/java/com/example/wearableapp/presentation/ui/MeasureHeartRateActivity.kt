@@ -1,42 +1,30 @@
 package com.example.wearableapp.presentation.ui
 
-import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
-import android.hardware.Sensor
-import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
-import android.hardware.SensorManager
-import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import android.content.Intent
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.domain.model.HeartRateData
 import com.example.wearableapp.R
 import com.example.wearableapp.databinding.ActivityMeasHeartRateBinding
 import com.example.wearableapp.presentation.adapter.HeartDataAdapter
-import com.example.wearableapp.presentation.utils.Constants.Companion.DEFAULT_NAME
+import com.example.wearableapp.presentation.service.HeartRateSensorService
+import com.example.wearableapp.presentation.utils.CheckPermission
 import com.example.wearableapp.presentation.viewmodel.MeasureHeartRateViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
-import java.util.jar.Manifest
-import kotlin.collections.ArrayList
 
 
-class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.OnClickListener {
+class MeasureHeartRateActivity : AppCompatActivity(),View.OnClickListener {
+
+    private val TAG = MeasureHeartRateActivity::class.java.name
 
     private lateinit var binding: ActivityMeasHeartRateBinding
 
@@ -66,16 +54,8 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
 
 
     private fun setListeners() {
-        binding.tvHeartRateStartId.setOnClickListener{
-            if (CheckPermission.isPermissionCheck(this)) {
-                startMeasureHRView()
-            }else{
-                Toast.makeText(this,"Sensor permission required",Toast.LENGTH_SHORT).show()
-            }
-        }
-        binding.tvHeartRateStopId.setOnClickListener{
-            stopMeasureHRView()
-        }
+        binding.tvHeartRateStartId.setOnClickListener(this)
+        binding.tvHeartRateStopId.setOnClickListener(this)
     }
 
     private fun startAnimation(){
@@ -125,19 +105,12 @@ class MeasureHeartRateActivity : AppCompatActivity(), SensorEventListener, View.
         startForegroundService(Intent(this, HeartRateSensorService::class.java))
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        false
-    }
-
-
     override fun onClick(v: View?) {
        when(v?.id){
            R.id.tvHeartRateStartId->{checkPermission(android.Manifest.permission.BODY_SENSORS,100)}
            R.id.tvHeartRateStopId->{stopMeasureHRView()}
        }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

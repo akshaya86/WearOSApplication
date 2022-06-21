@@ -36,7 +36,6 @@
     <dimen name="dimens_50dp">50dp</dimen>
     <dimen name="dimens_60dp">60dp</dimen>
     <dimen name="dimens_80dp">80dp</dimen>
-    <dimen name="dimens_60dp">50dp</dimen>
     <dimen name="digital_text_size">40dp</dimen>
     <dimen name="digital_text_size_round">45dp</dimen>
     <dimen name="digital_x_offset">15dp</dimen>
@@ -52,7 +51,5 @@
 
     <!--watch face dimens-->
     <dimen name="dimens_100dp">100dp</dimen>
-    <dimen name="dimens_140dp">140dp</dimen>
-    <dimen name="dimens_45dp">45dp</dimen>
 
 </resources>
