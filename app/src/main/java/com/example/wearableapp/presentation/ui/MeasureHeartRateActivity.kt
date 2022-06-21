@@ -43,12 +43,12 @@ class MeasureHeartRateActivity : AppCompatActivity(),View.OnClickListener {
         viewModel.getSavedData().observe(this, Observer {
             if(it.isNotEmpty()) {
                 Log.d(TAG, "Saved Value:" + it.last().heartRateBpm)
-                measureHRList.addAll(it)
+                measureHRList.add(it.last())
                 if (binding.clHeartStopId.visibility == View.VISIBLE) {
                     binding.heratRateCount.text = it.last().heartRateBpm.toString()
                 }
-                setHeartGraphData()
             }
+            setHeartGraphData()
         })
     }
 

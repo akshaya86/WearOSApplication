@@ -9,4 +9,5 @@ class HeartDataAdapter(private val heartData: ArrayList<Float>) : SparkAdapter()
     override fun getItem(index: Int) = heartData[index]
 
     override fun getY(index: Int): Float = heartData[index]
+
 }

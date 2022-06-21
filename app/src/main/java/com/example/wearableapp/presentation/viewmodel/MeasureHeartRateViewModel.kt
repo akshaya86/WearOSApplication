@@ -11,13 +11,13 @@ class MeasureHeartRateViewModel(private val getHeartRateOperationsUseCase :GetHe
 
     fun setDummyHeartData(measureHRList: List<HeartRateData>?): ArrayList<Float> {
         var heartDataList = ArrayList<Float>()
-        heartDataList.clear()
+        //heartDataList.clear()
         if(!measureHRList.isNullOrEmpty()) {
             measureHRList.forEach {
-                heartDataList.add(it.heartRateBpm?.toFloat() ?: 1f)
+                heartDataList.add(it.heartRateBpm?.toFloat() ?: 0.1f)
             }
         }else {
-            heartDataList.add(1f)
+            heartDataList.add(0.1f)
         }
         return heartDataList
     }
